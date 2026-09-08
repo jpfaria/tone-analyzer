@@ -1,0 +1,7 @@
+{
+  "name": "tone-analyzer",
+  "description": "Pure-function guitar tone analyzer: fingerprint a WAV, A/B compare a render against a reference, compute EQ-match gains. No rig, no network — JSON + spectrograms on disk.",
+  "version": "0.1.0",
+  "author": { "name": "João Paulo" },
+  "homepage": "https://github.com/jpfaria/tone-analyzer"
+}

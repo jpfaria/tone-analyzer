@@ -1,0 +1,11 @@
+{
+  "name": "tone-analyzer",
+  "owner": { "name": "João Paulo", "url": "https://github.com/jpfaria/tone-analyzer" },
+  "plugins": [
+    {
+      "name": "tone-analyzer",
+      "source": "./",
+      "description": "Analyze guitar audio (fingerprint JSON + spectrograms), compare a render to a reference, and compute EQ-match gains. Pure function on disk — never touches a rig."
+    }
+  ]
+}
