@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tone-analyzer"
+version = "0.1.0"
+description = "Pure-function guitar tone analyzer: WAV in, fingerprint JSON + spectrograms out; A/B compare and EQ-match."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [{ name = "João Paulo Faria" }]
+dependencies = [
+  "numpy==2.1.3",
+  "scipy==1.14.1",
+  "librosa==0.10.2.post1",
+  "soundfile==0.12.1",
+  "matplotlib==3.9.2",
+  "pyloudnorm==0.1.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.3"]
+
+[project.scripts]
+tone-analyzer = "tone_analyzer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/jpfaria/tone-analyzer"
+
+[tool.setuptools.packages.find]
+include = ["tone_analyzer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

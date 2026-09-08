@@ -1,0 +1,34 @@
+"""The `tone-analyzer` console script dispatches to each module's main()."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from tone_analyzer import cli
+
+
+def test_no_args_prints_usage_and_exits_2(capsys):
+    rc = cli.main([])
+    assert rc == 2
+    assert "analyze" in capsys.readouterr().err
+
+
+def test_help_exits_0(capsys):
+    rc = cli.main(["--help"])
+    assert rc == 0
+    out = capsys.readouterr().out
+    for cmd in ("analyze", "compare", "eq-match", "correction-ir"):
+        assert cmd in out
+
+
+def test_unknown_command_exits_2(capsys):
+    rc = cli.main(["frobnicate"])
+    assert rc == 2
+    assert "frobnicate" in capsys.readouterr().err
+
+
+def test_analyze_dispatch_writes_fingerprint(clean_di_path: Path, tmp_path: Path):
+    out = tmp_path / "out"
+    rc = cli.main(["analyze", str(clean_di_path), "--out-dir", str(out)])
+    assert rc == 0
+    assert (out / "fingerprint.json").is_file()
