@@ -132,7 +132,7 @@ def _make_section(
     rms_db: float,
     centroid_hz: float,
     band_energy_db: list[float] | None = None,
-    thd_pct: float = 5.0,
+    thd_pct: float | None = 5.0,
     tone_profile: str = "clean",
     presence: str = "rhythm",
     rt60_s: float | None = None,
@@ -164,7 +164,9 @@ def _make_section(
             "spectral_flatness": 0.3,
         },
         "distortion": {
-            "thd_estimate_pct": float(thd_pct),
+            # analyze emits None + thd_reliable=False when THD is unmeasurable
+            "thd_estimate_pct": float(thd_pct) if thd_pct is not None else None,
+            "thd_reliable": thd_pct is not None,
             "odd_to_even_harmonic_ratio_db": 0.0,
             "gain_character": tone_profile,
             "gain_character_confidence": 0.8,
@@ -470,3 +472,85 @@ def test_pick_ref_section_uses_explicit_wet_section_argument() -> None:
     params = list(sig.parameters.keys())
     # New signature: (ref_fp, wet_fp, override_idx, wet_section)
     assert "wet_section" in params, f"pick_ref_section must accept wet_section param, got {params}"
+
+
+# ---------------------------------------------------------------------------
+# Unmeasurable THD (analyze emits thd_estimate_pct=None, thd_reliable=False on
+# full mixes and sparse renders): compare must degrade, never crash.
+# ---------------------------------------------------------------------------
+
+@pytest.mark.parametrize("ref_thd,wet_thd", [(None, None), (None, 8.0), (8.0, None)])
+def test_compute_delta_thd_unavailable_when_either_side_none(ref_thd, wet_thd) -> None:
+    ref = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=ref_thd)
+    wet = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=wet_thd)
+    delta = compare.compute_delta(ref, wet, alignment_confidence=0.5)
+    assert delta["thd_estimate_pct"]["wet_minus_ref"] is None
+    assert delta["thd_estimate_pct"]["verdict"] == "unavailable"
+
+
+def test_compute_delta_thd_unreliable_flag_treated_as_unavailable() -> None:
+    # An older/cached fingerprint could carry a number with thd_reliable=False.
+    ref = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=60.0)
+    ref["distortion"]["thd_reliable"] = False
+    wet = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=8.0)
+    delta = compare.compute_delta(ref, wet, alignment_confidence=0.5)
+    assert delta["thd_estimate_pct"]["wet_minus_ref"] is None
+
+
+def test_match_score_skips_thd_weight_when_unavailable() -> None:
+    ref = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=None)
+    wet = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=None)
+    delta = compare.compute_delta(ref, wet, alignment_confidence=0.5)
+    # identical on every measurable axis → perfect score, not a penalty
+    assert compare.compute_match_score(delta) == pytest.approx(1.0)
+
+    # a spectral mismatch is weighted over the measurable axes only
+    wet_off = _make_section(0, rms_db=-12.0, centroid_hz=1200.0 + 1500.0, thd_pct=None)
+    delta_off = compare.compute_delta(ref, wet_off, alignment_confidence=0.5)
+    avail = 1.0 - compare.WEIGHTS["thd"]
+    expected = (avail - compare.WEIGHTS["centroid"]) / avail
+    assert compare.compute_match_score(delta_off) == pytest.approx(expected)
+
+
+def test_recommendations_skip_amp_when_thd_unavailable() -> None:
+    ref = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=None)
+    wet = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=30.0)
+    delta = compare.compute_delta(ref, wet, alignment_confidence=0.5)
+    recs = compare.build_recommendations(delta, ref, wet)
+    assert not [r for r in recs if r["target"] == "amp"]
+
+
+def test_section_similarity_tolerates_unavailable_thd() -> None:
+    ref = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=None)
+    wet = _make_section(0, rms_db=-12.0, centroid_hz=1200.0, thd_pct=12.0)
+    assert compare._section_similarity_no_timefx(ref, wet) == pytest.approx(1.0)
+
+
+def test_main_does_not_crash_when_thd_unmeasurable(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Full-mix ref + sparse render: every section THD None → diff still written."""
+    import numpy as np
+    from tone_analyzer import compare as compare_mod
+
+    ref_fp = _make_fingerprint([
+        _make_section(0, rms_db=-14.0, centroid_hz=1500.0, thd_pct=None, tone_profile="crunch"),
+        _make_section(1, rms_db=-10.0, centroid_hz=1800.0, thd_pct=None, tone_profile="high_gain"),
+    ], sha="refNoThd")
+    wet_fp = _make_fingerprint([
+        _make_section(0, rms_db=-16.0, centroid_hz=1400.0, thd_pct=None, tone_profile="crunch"),
+    ], sha="wetNoThd")
+    sig = np.zeros(48000, dtype=np.float32)
+
+    def fake(path):
+        return (ref_fp, sig, 48000) if "ref" in str(path) else (wet_fp, sig, 48000)
+
+    monkeypatch.setattr(compare_mod, "run_analyze_cached", fake)
+    monkeypatch.setattr(compare_mod, "render_ab_spec_png", lambda *a, **k: tmp_path / "ab.png")
+
+    out_dir = tmp_path / "out"
+    assert compare_mod.main(["/tmp/ref.wav", "/tmp/wet.wav", "--out-dir", str(out_dir)]) == 0
+    diff = json.loads((out_dir / "diff.json").read_text())
+    assert diff["delta"]["thd_estimate_pct"]["wet_minus_ref"] is None
+    assert 0.0 <= diff["match_score"] <= 1.0
+    assert not [r for r in diff["recommendations"] if r["target"] == "amp"]

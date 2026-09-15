@@ -116,14 +116,14 @@ def _section_similarity_no_timefx(ref_sec: dict, wet_sec: dict) -> float:
     )
     centroid_term = 1.0 - min(1.0, centroid_delta / NORMALIZATION["centroid_hz"])
 
-    thd_delta = abs(
-        ref_sec["distortion"]["thd_estimate_pct"]
-        - wet_sec["distortion"]["thd_estimate_pct"]
-    )
-    thd_term = 1.0 - min(1.0, thd_delta / NORMALIZATION["thd_pct"])
-
     # rebalance weights since rt60+delay are dropped
     w_band, w_cent, w_thd = 0.50, 0.20, 0.30
+
+    thd_delta = _thd_delta(ref_sec, wet_sec)
+    if thd_delta is None:
+        # THD unmeasurable on either side: score over band + centroid only.
+        return float((w_band * band_term + w_cent * centroid_term) / (w_band + w_cent))
+    thd_term = 1.0 - min(1.0, abs(thd_delta) / NORMALIZATION["thd_pct"])
     return float(w_band * band_term + w_cent * centroid_term + w_thd * thd_term)
 
 
@@ -222,6 +222,32 @@ def _section_slice(signal: np.ndarray, sr: int, section: dict) -> np.ndarray:
     return _common.mono_mixdown(sl)
 
 
+THD_UNAVAILABLE_VERDICT = "unavailable"
+
+
+def _reliable_thd(sec: dict) -> float | None:
+    """Section THD, or None when analyze could not measure it.
+
+    analyze emits `thd_estimate_pct: null, thd_reliable: false` on full mixes
+    and sparse renders (polyphonic confusion). A number flagged unreliable
+    (e.g. an older cached fingerprint) is treated the same way.
+    """
+    dist = sec["distortion"]
+    value = dist.get("thd_estimate_pct")
+    if value is None or dist.get("thd_reliable") is False:
+        return None
+    return float(value)
+
+
+def _thd_delta(ref_sec: dict, wet_sec: dict) -> float | None:
+    """wet - ref THD, or None when either side is unmeasurable."""
+    ref_thd = _reliable_thd(ref_sec)
+    wet_thd = _reliable_thd(wet_sec)
+    if ref_thd is None or wet_thd is None:
+        return None
+    return wet_thd - ref_thd
+
+
 def compute_delta(ref_sec: dict, wet_sec: dict, alignment_confidence: float) -> dict[str, Any]:
     rms_d = wet_sec["loudness"]["rms_db"] - ref_sec["loudness"]["rms_db"]
     centroid_d = wet_sec["spectrum"]["spectral_centroid_hz"] - ref_sec["spectrum"]["spectral_centroid_hz"]
@@ -229,7 +255,7 @@ def compute_delta(ref_sec: dict, wet_sec: dict, alignment_confidence: float) -> 
     for i, band_hz in enumerate(_common.BANDS_HZ):
         delta_db = wet_sec["spectrum"]["band_energy_db"][i] - ref_sec["spectrum"]["band_energy_db"][i]
         bands.append({"band_hz": int(band_hz), "delta_db": float(delta_db)})
-    thd_d = wet_sec["distortion"]["thd_estimate_pct"] - ref_sec["distortion"]["thd_estimate_pct"]
+    thd_d = _thd_delta(ref_sec, wet_sec)
     ref_rt60 = ref_sec["time_fx"]["reverb_rt60_s"]
     wet_rt60 = wet_sec["time_fx"]["reverb_rt60_s"]
     rt60_d = None
@@ -247,8 +273,11 @@ def compute_delta(ref_sec: dict, wet_sec: dict, alignment_confidence: float) -> 
         },
         "band_energy_db": bands,
         "thd_estimate_pct": {
-            "wet_minus_ref": float(thd_d),
-            "verdict": _verdict_db(thd_d, "wet less distorted", "wet more distorted", near_thresh=1.0),
+            "wet_minus_ref": float(thd_d) if thd_d is not None else None,
+            "verdict": (
+                THD_UNAVAILABLE_VERDICT if thd_d is None
+                else _verdict_db(thd_d, "wet less distorted", "wet more distorted", near_thresh=1.0)
+            ),
         },
         "reverb_rt60_s": {
             "wet_minus_ref": float(rt60_d) if rt60_d is not None else None,
@@ -297,7 +326,6 @@ def compute_match_score(delta: dict) -> float:
     band_term = 1.0 - min(1.0, band_rms / NORMALIZATION["band_energy_db"])
 
     centroid_term = 1.0 - min(1.0, abs(delta["spectral_centroid_hz"]["wet_minus_ref"]) / NORMALIZATION["centroid_hz"])
-    thd_term = 1.0 - min(1.0, abs(delta["thd_estimate_pct"]["wet_minus_ref"]) / NORMALIZATION["thd_pct"])
 
     rt60_d = delta["reverb_rt60_s"]["wet_minus_ref"]
     rt60_term = 1.0 if rt60_d is None else 1.0 - min(1.0, abs(rt60_d) / NORMALIZATION["rt60_s"])
@@ -305,13 +333,18 @@ def compute_match_score(delta: dict) -> float:
     delay_match = delta["delay_present"]["ref"] == delta["delay_present"]["wet"]
     delay_term = 1.0 if delay_match else 0.0
 
-    score = (
-        WEIGHTS["band_energy"] * band_term
-        + WEIGHTS["centroid"] * centroid_term
-        + WEIGHTS["thd"] * thd_term
-        + WEIGHTS["rt60"] * rt60_term
-        + WEIGHTS["delay"] * delay_term
-    )
+    terms = {
+        "band_energy": band_term,
+        "centroid": centroid_term,
+        "rt60": rt60_term,
+        "delay": delay_term,
+    }
+    thd_d = delta["thd_estimate_pct"]["wet_minus_ref"]
+    if thd_d is not None:
+        terms["thd"] = 1.0 - min(1.0, abs(thd_d) / NORMALIZATION["thd_pct"])
+    # Unmeasurable THD is skipped, not scored: renormalise over the terms present.
+    total_w = sum(WEIGHTS[k] for k in terms)
+    score = sum(WEIGHTS[k] * v for k, v in terms.items()) / total_w
     return float(max(0.0, min(1.0, score)))
 
 
@@ -323,7 +356,7 @@ def build_recommendations(delta: dict, ref_sec: dict, wet_sec: dict) -> list[dic
     recs: list[dict[str, Any]] = []
 
     thd_d = delta["thd_estimate_pct"]["wet_minus_ref"]
-    if abs(thd_d) > 3.0:
+    if thd_d is not None and abs(thd_d) > 3.0:
         if thd_d < 0:
             pct = int(round(min(50, max(5, abs(thd_d) * 4))))
             recs.append({

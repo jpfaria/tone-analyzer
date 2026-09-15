@@ -44,7 +44,10 @@ same commands to the agent. It never touches a rig — orchestrators
 - `diff.json`: `reference.matched_section_id`, `rendered`, `proximity_pct`
   (0–100, level-independent timbre; band-limited when `ref_top_octave_dead`),
   `ref_top_octave_dead`, `match_score`, `delta.*`, `recommendations[]`
-  (`target`, `action`, `rationale`), `converged`.
+  (`target`, `action`, `rationale`), `converged`. When either side's THD is
+  unmeasurable (`thd_estimate_pct: null` — full mixes, sparse renders),
+  `delta.thd_estimate_pct` is `null` / verdict `unavailable`, no amp
+  recommendation is emitted, and `match_score` renormalises over the other terms.
 - `eq-match` JSON: `new_gains[8]`, `proximity_pct`, `band_gap_db`,
   `total_gap_db`, `new_highpass_hz`, `ref_top_octave_dead`, `trustworthy_bands_hz`.
 
