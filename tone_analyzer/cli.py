@@ -9,10 +9,11 @@ from __future__ import annotations
 
 import sys
 
-from tone_analyzer import analyze, compare, eq_match, make_correction_ir
+from tone_analyzer import analyze, compare, eq_match, harmonics, make_correction_ir
 
 _COMMANDS = {
     "analyze": analyze.main,
+    "harmonics": harmonics.main,
     "compare": compare.main,
     "eq-match": eq_match.main,
     "correction-ir": make_correction_ir.main,
@@ -22,6 +23,7 @@ USAGE = """usage: tone-analyzer <command> [args...]
 
 commands:
   analyze        <in.wav> [--out-dir DIR]                     fingerprint.json + spectrograms + analysis.pdf
+  harmonics      <in.wav> (--auto | --at SEC --midi M ...) [--out-dir DIR]  harmonics.json
   compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram
   eq-match       <ref.wav> <wet.wav> --gains g1,...,g8        next 8-band EQ gains toward the reference
   correction-ir  <ref.wav> <wet.wav> --output IR.wav [--taps N]  minimum-phase correction IR from the LTAS gap
