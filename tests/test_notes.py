@@ -67,3 +67,33 @@ def test_detect_notes_names_each_note():
 def test_detect_notes_ignores_silence():
     sr = 22050
     assert notes.detect_notes(np.zeros(3 * sr, dtype=np.float32), sr) == []
+
+
+def test_harmonic_levels_recover_known_amplitudes():
+    sr = 48000
+    harm = [0.0, -6.0, -12.0, -18.0, -24.0, -30.0]
+    x = harmonic_note(57, sr, 1.0, harm, decay_s=50.0)
+    h = notes.harmonic_levels(x, sr, 0.05, midi_to_hz(57))
+    rel = h["relative_db"]
+    for k, db in enumerate(harm):
+        assert rel[k] == pytest.approx(db, abs=0.5)
+    assert all(p >= 10.0 for p in h["prominence_db"][:len(harm)])
+    assert len(h["level_db"]) == 16
+
+
+def test_harmonic_absent_has_low_prominence():
+    sr = 48000
+    x = harmonic_note(57, sr, 1.0, [0.0, -6.0, -200.0, -12.0], decay_s=50.0)
+    rng = np.random.default_rng(42)
+    x = x + (rng.standard_normal(len(x)) * 1e-4).astype(np.float32)
+    h = notes.harmonic_levels(x, sr, 0.05, midi_to_hz(57))
+    assert h["prominence_db"][2] < 10.0
+    assert h["prominence_db"][1] >= 10.0
+
+
+def test_harmonic_levels_marks_above_nyquist_and_short_signal():
+    sr = 22050
+    x = harmonic_note(88, sr, 1.0, [0.0, -6.0])        # E6, 1319 Hz
+    h = notes.harmonic_levels(x, sr, 0.05, midi_to_hz(88))
+    assert h["level_db"][15] is None                  # 16*1319 Hz > 0.9 * 11025
+    assert notes.harmonic_levels(x[: int(0.2 * sr)], sr, 0.0, midi_to_hz(88)) is None

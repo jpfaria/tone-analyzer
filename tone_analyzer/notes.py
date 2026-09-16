@@ -111,3 +111,52 @@ def detect_notes(
             "f0_hz": float(np.median(np.array(f0s)[hits])),
         })
     return found
+
+
+PEAK_TOL = 0.012
+NEIGH_LO = (0.90, 0.96)
+NEIGH_HI = (1.04, 1.10)
+
+
+def harmonic_levels(
+    signal: np.ndarray,
+    sr: int,
+    start_s: float,
+    f0_hz: float,
+    dur_s: float = 0.6,
+    n_harm: int = 16,
+) -> dict | None:
+    """Level at k*f0 and the neighbourhood median, k = 1..n_harm, in dB.
+
+    Returns None when less than 0.3 s of signal is left after start_s. Harmonics
+    above 0.9 * Nyquist are None.
+    """
+    x = np.asarray(signal, dtype=np.float64)
+    ini = int(round(start_s * sr))
+    n = min(int(round(dur_s * sr)), len(x) - ini)
+    if n < int(0.3 * sr):
+        return None
+    seg = x[ini:ini + n] * np.hanning(n)
+    power = np.abs(np.fft.rfft(seg, 4 * n)) ** 2
+    freqs = np.fft.rfftfreq(4 * n, 1 / sr)
+    level: list[float | None] = []
+    neigh: list[float | None] = []
+    prom: list[float | None] = []
+    for k in range(1, n_harm + 1):
+        f = f0_hz * k
+        peak = (freqs > f * (1 - PEAK_TOL)) & (freqs < f * (1 + PEAK_TOL))
+        around = (((freqs > f * NEIGH_LO[0]) & (freqs < f * NEIGH_LO[1]))
+                  | ((freqs > f * NEIGH_HI[0]) & (freqs < f * NEIGH_HI[1])))
+        if f > 0.9 * sr / 2 or not peak.any() or not around.any():
+            level.append(None)
+            neigh.append(None)
+            prom.append(None)
+            continue
+        lv = 10.0 * np.log10(power[peak].max() + 1e-30)
+        nb = 10.0 * np.log10(np.median(power[around]) + 1e-30)
+        level.append(float(lv))
+        neigh.append(float(nb))
+        prom.append(float(lv - nb))
+    h1 = level[0]
+    rel = [None if (v is None or h1 is None) else float(v - h1) for v in level]
+    return {"level_db": level, "neighbour_db": neigh, "prominence_db": prom, "relative_db": rel}
