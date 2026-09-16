@@ -48,3 +48,66 @@ def pitch_autocorr(
     hi = min(n - 1, int(sr / fmin))
     k = lo + int(np.argmax(ac[lo:hi]))
     return float(sr / k), float(ac[k])
+
+
+def note_onsets(
+    signal: np.ndarray, sr: int, floor_rel_db: float = 30.0, min_sep_s: float = 0.5
+) -> list[int]:
+    """Attack sample indices: envelope rises >1.5x after a lower block."""
+    x = np.asarray(signal, dtype=np.float64)
+    block = max(1, int(round(1024 * sr / VALIDATED_SR)))
+    if len(x) < 5 * block:
+        return []
+    env = np.array([np.abs(x[i:i + block]).max() for i in range(0, len(x) - block, block)])
+    peak = env.max()
+    if peak <= 0:
+        return []
+    lim = peak * 10.0 ** (-floor_rel_db / 20.0)
+    out: list[int] = []
+    last = -1e9
+    for k in range(2, len(env) - 2):
+        t = k * block / sr
+        if (env[k] > lim and env[k] > env[k - 1] * 1.5
+                and env[k] >= env[k + 1] * 0.8 and t - last > min_sep_s):
+            out.append(k * block)
+            last = t
+    return out
+
+
+def detect_notes(
+    signal: np.ndarray,
+    sr: int,
+    dur_s: float = 0.6,
+    conf_min: float = 0.8,
+    sustain_frac: float = 0.75,
+    min_estimates: int = 6,
+) -> list[dict]:
+    """Notes that hold one pitch over dur_s from their attack."""
+    x = np.asarray(signal, dtype=np.float64)
+    frame = int(round(FRAME_S * sr))
+    hop = int(round(HOP_S * sr))
+    span = int(round(dur_s * sr))
+    found: list[dict] = []
+    for a in note_onsets(x, sr):
+        if a + span >= len(x):
+            continue
+        est = []
+        f0s = []
+        for k in range(0, span - frame, hop):
+            f0, conf = pitch_autocorr(x[a + k:a + k + frame], sr)
+            if conf > conf_min:
+                est.append(int(round(hz_to_midi(f0))))
+                f0s.append(f0)
+        if len(est) < min_estimates:
+            continue
+        midi = int(np.bincount(est).argmax())
+        hits = np.array(est) == midi
+        if hits.mean() < sustain_frac:
+            continue
+        found.append({
+            "start_s": a / sr,
+            "midi": midi,
+            "name": midi_name(midi),
+            "f0_hz": float(np.median(np.array(f0s)[hits])),
+        })
+    return found

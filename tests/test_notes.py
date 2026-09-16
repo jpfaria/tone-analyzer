@@ -43,3 +43,27 @@ def test_midi_name():
     assert notes.midi_name(69) == "A4"
     assert notes.midi_name(60) == "C4"
     assert notes.midi_name(40) == "E2"
+
+
+def test_note_onsets_find_each_attack():
+    sr = 22050
+    x, starts = note_sequence([45, 57, 69], sr, note_s=1.0, gap_s=0.5, harm_db=[0.0, -6.0, -12.0])
+    found = [i / sr for i in notes.note_onsets(x, sr)]
+    assert len(found) == 3
+    for f, s in zip(found, starts):
+        assert abs(f - s) < 0.06
+
+
+def test_detect_notes_names_each_note():
+    sr = 44100
+    x, starts = note_sequence([45, 57, 69], sr, note_s=1.0, gap_s=0.5,
+                              harm_db=[0.0, -4.0, -8.0, -12.0, -16.0])
+    got = notes.detect_notes(x, sr)
+    assert [n["midi"] for n in got] == [45, 57, 69]
+    assert [n["name"] for n in got] == ["A2", "A3", "A4"]
+    assert got[2]["f0_hz"] == pytest.approx(440.0, rel=0.03)
+
+
+def test_detect_notes_ignores_silence():
+    sr = 22050
+    assert notes.detect_notes(np.zeros(3 * sr, dtype=np.float32), sr) == []
