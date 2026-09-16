@@ -33,7 +33,7 @@ Requires Python 3.11+ and `libsndfile` (macOS: bundled with the wheel; Debian/Ub
 
 The `tone-analyzer` skill bootstraps its own venv on first use and exposes the
 same commands to the agent. It never touches a rig — orchestrators
-(e.g. OpenRig's `openrig-tone-builder`) consume its JSON.
+(e.g. OpenRig's `openrig:tone-builder`) consume its JSON.
 
 ## Output schemas
 
