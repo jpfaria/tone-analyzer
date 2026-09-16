@@ -18,9 +18,9 @@ from typing import Any
 import numpy as np
 
 
-from tone_analyzer import _common  # noqa: E402
+from tone_analyzer import _common, notes  # noqa: E402
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 PDF_FILENAME = "analysis.pdf"
 PDF_PAGE_FIGSIZE = (11.0, 8.5)  # landscape letter, inches
@@ -156,6 +156,13 @@ def build_fingerprint(audio_path: Path, signal: np.ndarray, sr: int) -> dict[str
         },
         "sections": sections,
     }
+    mono = _common.mono_mixdown(signal)
+    note_rows = []
+    for n in notes.detect_notes(mono, sr):
+        h = notes.harmonic_levels(mono, sr, n["start_s"], n["f0_hz"])
+        if h is not None:
+            note_rows.append({**n, **h})
+    fingerprint["notes"] = note_rows
     return _common.round_for_json(fingerprint, ndigits=4)
 
 
@@ -225,6 +232,30 @@ def render_spec_global_png(
         section_boundaries=boundaries,
     )
     return output
+
+
+def render_spec_notes_png(signal, sr, notes_list, audio_path: Path, out_dir: Path) -> Path:
+    """Global spectrogram with each detected note's attack and name marked."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    mono = _common.mono_mixdown(signal)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.specgram(mono, NFFT=2048, Fs=sr, noverlap=1536, cmap="magma")
+    top = min(8000.0, sr / 2)
+    ax.set_ylim(0, top)
+    for n in notes_list:
+        ax.axvline(n["start_s"], color="cyan", lw=0.8)
+        ax.text(n["start_s"], top * 0.95, n["name"], color="cyan", fontsize=8)
+    ax.set_title(f"Notes - {audio_path.name}")
+    ax.set_xlabel("time (s)")
+    ax.set_ylabel("Hz")
+    path = out_dir / "spec_notes.png"
+    fig.tight_layout()
+    fig.savefig(path, dpi=100)
+    plt.close(fig)
+    return path
 
 
 def render_spec_section_png(
@@ -446,6 +477,26 @@ def _render_pdf_section_page(
     plt.close(fig)
 
 
+def _render_pdf_notes_page(pdf, fingerprint: dict[str, Any]) -> None:
+    import matplotlib.pyplot as plt
+
+    fig = plt.figure(figsize=PDF_PAGE_FIGSIZE)
+    fig.suptitle("Notes", fontsize=14)
+    rows = fingerprint.get("notes", [])
+    if not rows:
+        fig.text(0.05, 0.85, "No sustained notes detected.", fontsize=10)
+    for i, n in enumerate(rows[:12]):
+        ax = fig.add_subplot(4, 3, i + 1)
+        rel = [v if v is not None else float("nan") for v in n["relative_db"]]
+        ax.bar(range(1, len(rel) + 1), rel, color="#3a6ea5")
+        ax.set_title(f'{n["name"]} @ {n["start_s"]:.2f}s', fontsize=8)
+        ax.set_ylim(-60, 10)
+        ax.tick_params(labelsize=6)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    pdf.savefig(fig, dpi=PDF_DPI)
+    plt.close(fig)
+
+
 def build_pdf_report(
     fingerprint: dict[str, Any],
     signal: np.ndarray,
@@ -464,6 +515,7 @@ def build_pdf_report(
         _render_pdf_global_page(pdf, signal, sr, sections_ranges, audio_path)
         for section in fingerprint["sections"]:
             _render_pdf_section_page(pdf, section, signal, sr, audio_path)
+        _render_pdf_notes_page(pdf, fingerprint)
     return pdf_path
 
 
@@ -501,6 +553,7 @@ def main(argv: list[str] | None = None) -> int:
 
     sections_ranges = [(s["start_s"], s["end_s"]) for s in fingerprint["sections"]]
     render_spec_global_png(signal, sr, sections_ranges, audio_path, out_dir)
+    render_spec_notes_png(signal, sr, fingerprint["notes"], audio_path, out_dir)
     for s in fingerprint["sections"]:
         render_spec_section_png(
             signal, sr, s["start_s"], s["end_s"], s["id"], audio_path, out_dir,

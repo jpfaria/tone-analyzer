@@ -26,7 +26,7 @@ def _run(input_path: Path, tmp_path: Path) -> dict:
 def test_clean_di_basic(clean_di_path: Path, tmp_path: Path) -> None:
     fp = _run(clean_di_path, tmp_path)
 
-    assert fp["schema_version"] == 3
+    assert fp["schema_version"] == 4
     assert fp["source"]["channels"] == 1
     assert fp["source"]["sample_rate_hz"] == 22050
     assert 3.5 < fp["source"]["duration_s"] < 4.5
@@ -154,3 +154,27 @@ def test_pdf_multi_section_pages_count_scales_with_sections(
         f"expected at least {expected_min} pages (cover + global + {len(fp['sections'])} sections), "
         f"got {page_markers} /Type /Page markers"
     )
+
+
+def test_analyze_reports_notes_in_all_three_outputs(tmp_path: Path) -> None:
+    import re
+
+    from tests._synth import note_sequence
+
+    sr = 44100
+    x, _ = note_sequence([45, 57, 69], sr, 1.0, 0.5, [0.0, -6.0, -12.0, -18.0])
+    wav = tmp_path / "seq.wav"
+    sf.write(wav, x, sr, subtype="FLOAT")
+    out = tmp_path / "out"
+    assert analyze.main([str(wav), "--out-dir", str(out)]) == 0
+
+    fp = json.loads((out / "fingerprint.json").read_text())
+    assert [n["midi"] for n in fp["notes"]] == [45, 57, 69]
+    assert fp["notes"][0]["relative_db"][1] == pytest.approx(-6.0, abs=0.7)
+
+    assert (out / "spec_notes.png").stat().st_size > 1000
+
+    # pypdf is not a dependency and matplotlib embeds text as glyphs, so the
+    # notes page is checked by page count: cover + global + one per section + notes
+    pages = len(re.findall(rb"/Type\s*/Page\b", (out / "analysis.pdf").read_bytes()))
+    assert pages == 2 + len(fp["sections"]) + 1
