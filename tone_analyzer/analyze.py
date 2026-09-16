@@ -18,7 +18,7 @@ from typing import Any
 import numpy as np
 
 
-from tone_analyzer import _common, notes  # noqa: E402
+from tone_analyzer import _common, notes, take  # noqa: E402
 
 SCHEMA_VERSION = 4
 
@@ -152,6 +152,7 @@ def build_fingerprint(audio_path: Path, signal: np.ndarray, sr: int) -> dict[str
         "global": {
             "lufs_integrated": _common.compute_lufs_integrated(signal, sr),
             "peak_db": _common.compute_peak_db(signal),
+            "saturated_samples": take.saturated_samples(signal),
             "stereo": _common.compute_stereo_features(signal),
         },
         "sections": sections,

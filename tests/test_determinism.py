@@ -22,11 +22,11 @@ import pytest
 from tone_analyzer import analyze
 
 PINNED_HASHES = {
-    "clean_di.wav":      "e5a966d833e23bf3e5e7d92ffc877482ba141571e8f8b4dc1db8c1b1bda5ce2d",
-    "distorted_di.wav":  "e891b7cb5635ce7d1da1b00345c7f5e7bc575e14aec351a10b0091e264f8b901",
-    "reverb_tail.wav":   "05cfb26262b9e2c84821c07208fe783f3fbc4c9e172a3f02d5e262bf34041bde",
-    "delayed_echo.wav":  "9b0121479b67131d4a9e784a868554d6e95bf6c97513f17c2b7d7addb6f0379e",
-    "multi_section.wav": "58cd91fa236e1251df8b0656b1c6ae8ea913ff16bf58ef64021e8026c2673570",
+    "clean_di.wav":      "06b9ada60399b47e5e60e85290bc688f696a3b017f28fc899cf936739f895120",
+    "distorted_di.wav":  "7ccfdf17cec4cfee9ab110a19ea0813b4319051282e970498468fa30aba9ae9e",
+    "reverb_tail.wav":   "12cc14588c3da9ff9df8617f8c2b1943c3846d79ca78cfdb5966152a9e6e1c2c",
+    "delayed_echo.wav":  "83594d474cf686e5aae1c9c1a44daf08bf843060efc2f838d82377851d35c97c",
+    "multi_section.wav": "5b9104f9997497000c40151f4c9a7a7110927468002fd992b2ac83c7f54da295",
 }
 
 

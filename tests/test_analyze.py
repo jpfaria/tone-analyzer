@@ -178,3 +178,16 @@ def test_analyze_reports_notes_in_all_three_outputs(tmp_path: Path) -> None:
     # notes page is checked by page count: cover + global + one per section + notes
     pages = len(re.findall(rb"/Type\s*/Page\b", (out / "analysis.pdf").read_bytes()))
     assert pages == 2 + len(fp["sections"]) + 1
+
+
+def test_fingerprint_counts_saturation_per_channel(tmp_path: Path) -> None:
+    sr = 22050
+    t = np.arange(sr) / sr
+    left = (0.4 * np.sin(2 * np.pi * 220 * t)).astype(np.float32)
+    right = np.clip(1.5 * np.sin(2 * np.pi * 220 * t), -1.0, 1.0).astype(np.float32)
+    wav = tmp_path / "clip_right.wav"
+    sf.write(wav, np.stack([left, right], axis=1), sr, subtype="FLOAT")
+    out = tmp_path / "out"
+    assert analyze.main([str(wav), "--out-dir", str(out)]) == 0
+    fp = json.loads((out / "fingerprint.json").read_text())
+    assert fp["global"]["saturated_samples"] > 0
