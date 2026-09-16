@@ -28,7 +28,7 @@ commands:
   take           <in.wav> [--out-dir DIR]                     take.json: pitch, duration, saturation, noise floor
   compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram  [obsolete: use tone-builder]
   eq-match       <ref.wav> <wet.wav> --gains g1,...,g8        next 8-band EQ gains toward the reference  [obsolete: use tone-builder]
-  correction-ir  <ref.wav> <wet.wav> --output IR.wav [--taps N]  minimum-phase correction IR from the LTAS gap
+  correction-ir  <ref.wav> <wet.wav> --output IR.wav [--taps N]  minimum-phase correction IR from the LTAS gap  [obsolete: use tone-builder]
 
 Run `tone-analyzer <command> --help` for that command's options.
 """

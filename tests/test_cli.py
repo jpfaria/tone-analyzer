@@ -46,3 +46,8 @@ def test_help_lists_harmonics_and_marks_obsolete(capsys):
     out = capsys.readouterr().out
     assert "harmonics" in out
     assert "obsolete" in out
+
+
+def test_correction_ir_warns_obsolete(clean_di_path: Path, tmp_path: Path, capsys):
+    cli.main(["correction-ir", str(clean_di_path), str(clean_di_path), "--output", str(tmp_path / "ir.wav")])
+    assert "obsolete" in capsys.readouterr().err

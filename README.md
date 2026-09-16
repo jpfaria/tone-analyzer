@@ -1,23 +1,25 @@
 # tone-analyzer
 
-Pure-function guitar tone analyzer. WAV in → JSON + spectrogram PNGs out.
-No network, no DAW, no rig: the only side effect is files under `--out-dir`.
+Extracts information from ONE guitar audio: metrics (JSON), documentation (PDF)
+and spectrum (PNG). No network, no DAW, no rig: the only side effect is files
+under `--out-dir`. Comparing two audios or deciding whether a tone matches
+belongs to [tone-builder](https://github.com/jpfaria/tone-builder).
 
-- **`analyze <wav>`** — `fingerprint.json` (schema 3: global + per-section
-  loudness / spectrum / distortion / time-FX descriptors, honest match target),
-  `spec_*.png`, `analysis.pdf`.
-- **`compare <ref.wav> <wet.wav>`** — auto-picks the reference section that best
-  matches the wet signal, emits `diff.json` (`proximity_pct`, `match_score`,
-  ranked `recommendations[]`) plus an A/B spectrogram.
-- **`eq-match <ref.wav> <wet.wav> --gains g1,…,g8`** — next 8-band EQ gains that
-  move the wet render's normalised LTAS shape toward the reference.
-- **`correction-ir <ref.wav> <wet.wav> --output ir.wav`** — minimum-phase
-  correction IR from the LTAS gap.
+- **`analyze <wav>`** — `fingerprint.json` (schema 4: global incl. per-channel
+  `saturated_samples`, per-section loudness / spectrum / distortion / time-FX,
+  detected `notes[]` with harmonic levels), `spec_*.png` incl. `spec_notes.png`,
+  `analysis.pdf` incl. a Notes page.
+- **`harmonics <wav> (--auto | --at SEC --midi M …)`** — harmonics H1..H16 of a
+  note at a given attack time (e.g. inside a full mix) or of the detected notes.
+- **`take <wav>`** — one recorded note: pitch, onset, duration, saturated
+  samples, noise floor, SNR. Measures only; no verdict.
+- **Obsolete** (they compare two audios — use tone-builder): `compare`,
+  `eq-match`, `correction-ir`.
 
 ## Install
 
 ```bash
-pip install "tone-analyzer @ git+https://github.com/jpfaria/tone-analyzer@v0.1.0"
+pip install "tone-analyzer @ git+https://github.com/jpfaria/tone-analyzer@v0.2.0"
 tone-analyzer analyze track.wav
 ```
 
@@ -33,23 +35,20 @@ Requires Python 3.11+ and `libsndfile` (macOS: bundled with the wheel; Debian/Ub
 
 The `tone-analyzer` skill bootstraps its own venv on first use and exposes the
 same commands to the agent. It never touches a rig — orchestrators
-(e.g. OpenRig's `openrig:tone-builder`) consume its JSON.
+(tone-builder) consume its JSON.
 
 ## Output schemas
 
-- `fingerprint.json`: `source`, `global`, `sections[]` (each with `loudness`,
-  `spectrum`, `distortion`, `time_fx`, `labels`), `fingerprint_match_target`
-  (`third_octave_centers_hz`, `ltas_norm_db`, `reliable_mask`,
-  `reliable_range_hz`, `top_octave_dead`, `self_floor_pct`).
-- `diff.json`: `reference.matched_section_id`, `rendered`, `proximity_pct`
-  (0–100, level-independent timbre; band-limited when `ref_top_octave_dead`),
-  `ref_top_octave_dead`, `match_score`, `delta.*`, `recommendations[]`
-  (`target`, `action`, `rationale`), `converged`. When either side's THD is
-  unmeasurable (`thd_estimate_pct: null` — full mixes, sparse renders),
-  `delta.thd_estimate_pct` is `null` / verdict `unavailable`, no amp
-  recommendation is emitted, and `match_score` renormalises over the other terms.
-- `eq-match` JSON: `new_gains[8]`, `proximity_pct`, `band_gap_db`,
-  `total_gap_db`, `new_highpass_hz`, `ref_top_octave_dead`, `trustworthy_bands_hz`.
+- `fingerprint.json` (schema 4): `source`, `global` (`lufs_integrated`, `peak_db`,
+  `saturated_samples`, `stereo`), `sections[]` (`loudness`, `spectrum`,
+  `distortion`, `time_fx`, `labels`), `notes[]` (`start_s`, `midi`, `name`,
+  `f0_hz`, `level_db[16]`, `neighbour_db[16]`, `prominence_db[16]`,
+  `relative_db[16]`). `peak_db` is a mono mixdown — read `saturated_samples`
+  to know whether any channel clipped.
+- `harmonics.json` (schema 1): `source`, `notes[]` as above.
+- `take.json`: `duration_s`, `onset_s`, `midi`, `name`, `f0_hz`,
+  `pitch_confidence`, `saturated_samples`, `peak_db`, `noise_floor_db`,
+  `signal_db`, `snr_db`.
 
 Files longer than 600 s are rejected; trim first.
 

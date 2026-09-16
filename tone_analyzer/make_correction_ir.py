@@ -14,6 +14,7 @@ after proximity (render convolved with the IR) so the gain is verifiable.
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -25,6 +26,11 @@ from tone_analyzer import _common  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
+    print(
+        "tone-analyzer: 'correction-ir' is obsolete — it derives a correction from two audios, "
+        "which belongs to tone-builder.",
+        file=sys.stderr,
+    )
     p = argparse.ArgumentParser(description="Write a min-phase correction-EQ IR from ref + render.")
     p.add_argument("reference", help="isolated-guitar reference WAV")
     p.add_argument("render", help="rendered (wet) WAV")
