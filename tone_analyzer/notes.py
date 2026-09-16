@@ -47,6 +47,11 @@ def pitch_autocorr(
     lo = max(1, int(sr / fmax))
     hi = min(n - 1, int(sr / fmin))
     k = lo + int(np.argmax(ac[lo:hi]))
+    if k == lo or k == hi - 1:
+        # A peak on the edge of the lag range means the autocorrelation just
+        # decays through it — no period was found. Seen on a real low-E take
+        # as MIDI 89 (= fmax).
+        return float(sr / k), 0.0
     return float(sr / k), float(ac[k])
 
 
@@ -92,23 +97,27 @@ def detect_notes(
         if a + span >= len(x):
             continue
         est = []
-        f0s = []
         for k in range(0, span - frame, hop):
             f0, conf = pitch_autocorr(x[a + k:a + k + frame], sr)
             if conf > conf_min:
-                est.append(int(round(hz_to_midi(f0))))
-                f0s.append(f0)
+                est.append(hz_to_midi(f0))
         if len(est) < min_estimates:
             continue
-        midi = int(np.bincount(est).argmax())
-        hits = np.array(est) == midi
+        est_arr = np.array(est)
+        centre = float(np.median(est_arr))
+        # Sustain = estimates within half a semitone of the median. Comparing
+        # rounded MIDI numbers dropped real notes whose intonation sat near the
+        # boundary between two semitones.
+        hits = np.abs(est_arr - centre) <= 0.5
         if hits.mean() < sustain_frac:
             continue
+        pitch = float(np.median(est_arr[hits]))
+        midi = int(round(pitch))
         found.append({
             "start_s": a / sr,
             "midi": midi,
             "name": midi_name(midi),
-            "f0_hz": float(np.median(np.array(f0s)[hits])),
+            "f0_hz": float(440.0 * 2.0 ** ((pitch - 69) / 12.0)),
         })
     return found
 

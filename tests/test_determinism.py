@@ -26,7 +26,7 @@ PINNED_HASHES = {
     "distorted_di.wav":  "7ccfdf17cec4cfee9ab110a19ea0813b4319051282e970498468fa30aba9ae9e",
     "reverb_tail.wav":   "12cc14588c3da9ff9df8617f8c2b1943c3846d79ca78cfdb5966152a9e6e1c2c",
     "delayed_echo.wav":  "83594d474cf686e5aae1c9c1a44daf08bf843060efc2f838d82377851d35c97c",
-    "multi_section.wav": "5b9104f9997497000c40151f4c9a7a7110927468002fd992b2ac83c7f54da295",
+    "multi_section.wav": "e6aa3e8e7e4e3bd9b95ec2ccb0b6e2d44c5e8a1bb97362a9b50c038f038a8db3",
 }
 
 

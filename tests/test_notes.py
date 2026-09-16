@@ -97,3 +97,32 @@ def test_harmonic_levels_marks_above_nyquist_and_short_signal():
     h = notes.harmonic_levels(x, sr, 0.05, midi_to_hz(88))
     assert h["level_db"][15] is None                  # 16*1319 Hz > 0.9 * 11025
     assert notes.harmonic_levels(x[: int(0.2 * sr)], sr, 0.0, midi_to_hz(88)) is None
+
+
+def test_pitch_autocorr_peak_at_search_edge_has_zero_confidence():
+    """A monotonically decaying autocorrelation peaks at the edge of the lag
+    range: that is not a pitch. Seen on a real low-E string take as MIDI 89
+    (= fmax 1400 Hz)."""
+    sr = 48000
+    rng = np.random.default_rng(7)
+    brown = np.cumsum(rng.standard_normal(int(round(notes.FRAME_S * sr))))
+    brown -= brown.mean()
+    _, conf = notes.pitch_autocorr(brown.astype(np.float32), sr)
+    assert conf == 0.0
+
+
+def test_detect_notes_tolerates_intonation_near_semitone_boundary():
+    """A real A#2 drifted between MIDI 46 and 47 (14 vs 7 frames) and was dropped
+    by a same-rounded-MIDI sustain rule. Sustain is now distance to the median."""
+    sr = 48000
+    n = int(1.0 * sr)
+    t = np.arange(n) / sr
+    midi = 46.5 + (10 / 100) * np.sin(2 * np.pi * 5 * t)          # +-10 cents vibrato on the boundary
+    f = 440.0 * 2 ** ((midi - 69) / 12)
+    phase = 2 * np.pi * np.cumsum(f) / sr
+    x = sum(10 ** (db / 20) * np.sin(k * phase) for k, db in enumerate([0, -6, -12], 1))
+    x = (0.5 * x * np.minimum(t / 0.005, 1) * np.exp(-t / 1.5) / np.abs(x).max())
+    sig = np.concatenate([np.zeros(int(0.5 * sr)), x, np.zeros(int(0.5 * sr))]).astype(np.float32)
+    got = notes.detect_notes(sig, sr)
+    assert len(got) == 1
+    assert got[0]["midi"] in (46, 47)
