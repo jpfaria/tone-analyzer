@@ -24,6 +24,7 @@ skill's Step 7.
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 from pathlib import Path
 from typing import Any
@@ -230,6 +231,11 @@ def build_correction(
 
 
 def main(argv: list[str] | None = None) -> int:
+    print(
+        "tone-analyzer: 'eq-match' is obsolete — comparing two audios belongs to tone-builder; "
+        "also invalid for single notes (1/3-octave bands over harmonic valleys).",
+        file=sys.stderr,
+    )
     parser = argparse.ArgumentParser(
         description="Compute the next 8-band EQ gains to match a reference's spectral shape."
     )

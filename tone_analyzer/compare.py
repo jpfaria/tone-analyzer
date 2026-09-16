@@ -10,6 +10,7 @@ target a fixed enum of block kinds the orchestrator knows how to dispatch.
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 import random
 import time
@@ -562,6 +563,11 @@ def _parse_wet_section_arg(raw: str) -> int | str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    print(
+        "tone-analyzer: 'compare' is obsolete — comparing two audios belongs to tone-builder; "
+        "also invalid for single notes (1/3-octave bands over harmonic valleys).",
+        file=sys.stderr,
+    )
     parser = argparse.ArgumentParser(description="A/B compare a reference WAV with a wet WAV.")
     parser.add_argument("reference", help="path to reference WAV")
     parser.add_argument("wet", help="path to wet/rendered WAV")

@@ -24,8 +24,8 @@ USAGE = """usage: tone-analyzer <command> [args...]
 commands:
   analyze        <in.wav> [--out-dir DIR]                     fingerprint.json + spectrograms + analysis.pdf
   harmonics      <in.wav> (--auto | --at SEC --midi M ...) [--out-dir DIR]  harmonics.json
-  compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram
-  eq-match       <ref.wav> <wet.wav> --gains g1,...,g8        next 8-band EQ gains toward the reference
+  compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram  [obsolete: use tone-builder]
+  eq-match       <ref.wav> <wet.wav> --gains g1,...,g8        next 8-band EQ gains toward the reference  [obsolete: use tone-builder]
   correction-ir  <ref.wav> <wet.wav> --output IR.wav [--taps N]  minimum-phase correction IR from the LTAS gap
 
 Run `tone-analyzer <command> --help` for that command's options.

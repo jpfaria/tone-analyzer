@@ -32,3 +32,17 @@ def test_analyze_dispatch_writes_fingerprint(clean_di_path: Path, tmp_path: Path
     rc = cli.main(["analyze", str(clean_di_path), "--out-dir", str(out)])
     assert rc == 0
     assert (out / "fingerprint.json").is_file()
+
+
+def test_compare_and_eq_match_warn_obsolete(clean_di_path: Path, tmp_path: Path, capsys):
+    cli.main(["compare", str(clean_di_path), str(clean_di_path), "--out-dir", str(tmp_path / "c")])
+    assert "obsolete" in capsys.readouterr().err
+    cli.main(["eq-match", str(clean_di_path), str(clean_di_path), "--gains", "0,0,0,0,0,0,0,0"])
+    assert "obsolete" in capsys.readouterr().err
+
+
+def test_help_lists_harmonics_and_marks_obsolete(capsys):
+    cli.main(["--help"])
+    out = capsys.readouterr().out
+    assert "harmonics" in out
+    assert "obsolete" in out
