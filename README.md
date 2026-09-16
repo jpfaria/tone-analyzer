@@ -19,7 +19,7 @@ belongs to [tone-builder](https://github.com/jpfaria/tone-builder).
 ## Install
 
 ```bash
-pip install "tone-analyzer @ git+https://github.com/jpfaria/tone-analyzer@v0.2.0"
+pip install "tone-analyzer @ git+https://github.com/jpfaria/tone-analyzer@v0.2.1"
 tone-analyzer analyze track.wav
 ```
 
