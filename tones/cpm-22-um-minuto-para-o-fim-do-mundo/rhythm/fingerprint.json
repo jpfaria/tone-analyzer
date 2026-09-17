@@ -1,0 +1,255 @@
+{
+  "global": {
+    "lufs_integrated": -17.8694,
+    "peak_db": -0.0188,
+    "saturated_samples": 16,
+    "stereo": {
+      "is_stereo": true,
+      "lr_correlation": 0.1986,
+      "ms_balance_ratio": 0.55
+    }
+  },
+  "notes": [],
+  "schema_version": 4,
+  "sections": [
+    {
+      "distortion": {
+        "gain_character": "distortion",
+        "gain_character_confidence": 0.5,
+        "odd_to_even_harmonic_ratio_db": -11.3228,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 43.0,
+      "id": "section_0",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "lead",
+        "tone_profile": "distortion"
+      },
+      "loudness": {
+        "crest_factor_db": 14.057,
+        "peak_db": -0.0188,
+        "rms_db": -14.0758
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -20.8453,
+          -18.1482,
+          -24.5505,
+          -33.9837,
+          -28.7142,
+          -33.5055,
+          -52.4689,
+          -86.4659
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 974.3231,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 322.998
+      },
+      "start_s": 0.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 71,
+        "delay_present": true,
+        "delay_time_ms_estimate": 1369,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "distortion",
+        "gain_character_confidence": 0.5,
+        "odd_to_even_harmonic_ratio_db": -1.7135,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 168.0,
+      "id": "section_1",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "rhythm",
+        "tone_profile": "distortion"
+      },
+      "loudness": {
+        "crest_factor_db": 14.7759,
+        "peak_db": -5.419,
+        "rms_db": -20.1949
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -32.2221,
+          -30.1866,
+          -29.0454,
+          -30.3951,
+          -27.2768,
+          -28.1151,
+          -47.0338,
+          -95.303
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2218.7165,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3036.1816
+      },
+      "start_s": 43.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 46,
+        "delay_present": true,
+        "delay_time_ms_estimate": 1426,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "distortion",
+        "gain_character_confidence": 0.5,
+        "odd_to_even_harmonic_ratio_db": 0.1674,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 188.0,
+      "id": "section_2",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "rhythm",
+        "tone_profile": "distortion"
+      },
+      "loudness": {
+        "crest_factor_db": 14.5552,
+        "peak_db": -8.0844,
+        "rms_db": -22.6396
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -34.8251,
+          -30.2255,
+          -29.5553,
+          -33.2769,
+          -33.2107,
+          -31.3678,
+          -49.26,
+          -99.9718
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2190.1278,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 2820.8496
+      },
+      "start_s": 168.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 50,
+        "delay_present": true,
+        "delay_time_ms_estimate": 897,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "clean",
+        "gain_character_confidence": 0.6,
+        "odd_to_even_harmonic_ratio_db": -3.224,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 198.0,
+      "id": "section_3",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "rhythm",
+        "tone_profile": "clean"
+      },
+      "loudness": {
+        "crest_factor_db": 14.8482,
+        "peak_db": -6.2139,
+        "rms_db": -21.0621
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -26.7208,
+          -26.1817,
+          -29.6548,
+          -39.9255,
+          -40.8043,
+          -41.7693,
+          -61.289,
+          -102.8442
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 531.8128,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 387.5977
+      },
+      "start_s": 188.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 96,
+        "delay_present": true,
+        "delay_time_ms_estimate": 1487,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    }
+  ],
+  "source": {
+    "channels": 2,
+    "duration_s": 198.0,
+    "path": "rhythm.wav",
+    "sample_rate_hz": 44100,
+    "sha256": "b1dfd9cd95a0a6a19be6f0200931c50e6e0823262fb37700a0692a2f662bc146"
+  }
+}

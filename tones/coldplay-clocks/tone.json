@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Coldplay",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 252.4667,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "40ce7d4fb33160b11643361ef0c142182c1d3077d12139574d2e6caf5cc8a169"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 252.4667,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "5ae5a06facc02754107d42a349ff5bfd5ee8c238579a7fab56c68af49b7883e8"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "coldplay-clocks",
+  "song": "Clocks"
+}

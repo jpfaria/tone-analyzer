@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Pitty",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 222.04,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "6a2f176bc5a2296170173089f5d1104ff8d5eee02ba15038ff0ec618618f54ab"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 222.04,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "28f9aff606d6f8a658b715c319a13cadb7621d25be41e681423da8092add8a96"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "pitty-na-sua-estante",
+  "song": "Na Sua Estante"
+}

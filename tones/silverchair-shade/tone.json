@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Silverchair",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 241.92,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "c219bb85b40c4847e2ac2b733b8a300c79045635b780256d246a8552bd034cca"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 241.92,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "8fe8426d6ae99880fddf38d67cccfb6f854180f20f105efb4d917ecfc2a543ff"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "silverchair-shade",
+  "song": "Shade"
+}

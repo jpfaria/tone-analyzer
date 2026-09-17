@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "Metallica",
+  "roles": {
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 36.1133,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "2eb7f0d35d585d29125aa1104c87edeba3ea6037356a938614e50bd96c9a5a2f"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "metallica-one",
+  "song": "One"
+}

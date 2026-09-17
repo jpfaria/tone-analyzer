@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "John Mayer",
+  "roles": {
+    "acoustic": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 213.6267,
+        "file": "acoustic/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "c0098fc9a07770571366cf2bb01641501e883628316a4d4063388566862dcda7"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "john-mayer-xo",
+  "song": "XO"
+}

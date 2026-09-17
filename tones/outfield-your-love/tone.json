@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "The Outfield",
+  "roles": {
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 221.8841,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "1ac842d5ab5c930c1dc7fa401d1122e1e8e0103a157318c222c21346c52bb4a7"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "outfield-your-love",
+  "song": "Your Love"
+}

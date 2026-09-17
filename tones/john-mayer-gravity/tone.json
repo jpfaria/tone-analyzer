@@ -1,0 +1,66 @@
+{
+  "aliases": [],
+  "artist": "John Mayer",
+  "roles": {
+    "guitar-demucs": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 245.8906,
+        "file": "guitar-demucs/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 44100,
+        "separator": "demucs htdemucs_6s",
+        "sha256": "9570ecc6131060899ab9d13f5d12ca4d079b572cd0a616c580bfd1e8d10c4dfd"
+      },
+      "track": {
+        "duration_s": 245.8267,
+        "file": "track.mp3",
+        "sample_rate_hz": 44100,
+        "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
+      }
+    },
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 245.8267,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "30ab969b9fde228f2fb86d8cabaa8a82da0d6eb6253676a0b396d7b1751662e7"
+      },
+      "track": {
+        "duration_s": 245.8267,
+        "file": "track.mp3",
+        "sample_rate_hz": 44100,
+        "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
+      }
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 245.8267,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "d99e75c148b5b5d904cb0eda86dc6c58970a28122f961705d91156b41b472b95"
+      },
+      "track": {
+        "duration_s": 245.8267,
+        "file": "track.mp3",
+        "sample_rate_hz": 44100,
+        "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "john-mayer-gravity",
+  "song": "Gravity"
+}

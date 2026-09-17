@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "Barão Vermelho",
+  "roles": {
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 213.9333,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "554f5464f4e1893d53489d9bcceadd223afd19717cb35f34036bdab745d15415"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "barao-vermelho-bete-balanco",
+  "song": "Bete Balanço"
+}

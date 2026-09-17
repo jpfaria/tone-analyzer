@@ -1,0 +1,994 @@
+{
+  "global": {
+    "lufs_integrated": -17.6944,
+    "peak_db": -2.9952,
+    "saturated_samples": 2,
+    "stereo": {
+      "is_stereo": true,
+      "lr_correlation": 0.0921,
+      "ms_balance_ratio": 0.5229
+    }
+  },
+  "notes": [
+    {
+      "f0_hz": 347.8261,
+      "level_db": [
+        36.0531,
+        13.6593,
+        -3.4202,
+        -15.2073,
+        29.3626,
+        31.8002,
+        27.1871,
+        15.282,
+        2.1969,
+        -24.8547,
+        -54.4237,
+        -58.4486,
+        -47.8735,
+        -34.4722,
+        -66.4586,
+        -64.2844
+      ],
+      "midi": 65,
+      "name": "F4",
+      "neighbour_db": [
+        -0.1012,
+        -24.909,
+        -45.6354,
+        -29.7627,
+        -20.3505,
+        -43.7023,
+        -49.8909,
+        -49.463,
+        -56.6829,
+        -64.7531,
+        -64.7763,
+        -65.9026,
+        -64.1583,
+        -72.763,
+        -66.2941,
+        -74.9895
+      ],
+      "prominence_db": [
+        36.1544,
+        38.5683,
+        42.2152,
+        14.5554,
+        49.7131,
+        75.5025,
+        77.0781,
+        64.745,
+        58.8798,
+        39.8984,
+        10.3526,
+        7.454,
+        16.2848,
+        38.2908,
+        -0.1644,
+        10.7052
+      ],
+      "relative_db": [
+        0.0,
+        -22.3938,
+        -39.4733,
+        -51.2604,
+        -6.6905,
+        -4.2529,
+        -8.866,
+        -20.7711,
+        -33.8562,
+        -60.9078,
+        -90.4768,
+        -94.5017,
+        -83.9266,
+        -70.5253,
+        -102.5117,
+        -100.3375
+      ],
+      "start_s": 34.9013
+    },
+    {
+      "f0_hz": 347.8261,
+      "level_db": [
+        26.993,
+        12.2576,
+        15.9967,
+        6.4824,
+        32.1079,
+        37.6952,
+        31.8572,
+        -3.6888,
+        13.8505,
+        6.8534,
+        -26.6178,
+        -47.9947,
+        -39.7029,
+        -5.6655,
+        -39.1592,
+        -51.5196
+      ],
+      "midi": 65,
+      "name": "F4",
+      "neighbour_db": [
+        -2.1672,
+        -16.3427,
+        -37.0497,
+        -11.6188,
+        -16.7284,
+        -20.8958,
+        -23.6153,
+        -36.6568,
+        -43.0465,
+        -37.3817,
+        -49.5728,
+        -50.0266,
+        -56.8746,
+        -58.7208,
+        -63.0542,
+        -67.337
+      ],
+      "prominence_db": [
+        29.1602,
+        28.6003,
+        53.0465,
+        18.1013,
+        48.8363,
+        58.591,
+        55.4725,
+        32.9679,
+        56.897,
+        44.2351,
+        22.955,
+        2.0319,
+        17.1716,
+        53.0553,
+        23.895,
+        15.8174
+      ],
+      "relative_db": [
+        0.0,
+        -14.7354,
+        -10.9962,
+        -20.5106,
+        5.1149,
+        10.7023,
+        4.8642,
+        -30.6818,
+        -13.1425,
+        -20.1396,
+        -53.6108,
+        -74.9877,
+        -66.6959,
+        -32.6585,
+        -66.1522,
+        -78.5126
+      ],
+      "start_s": 104.1067
+    },
+    {
+      "f0_hz": 350.365,
+      "level_db": [
+        36.0616,
+        10.6806,
+        5.1778,
+        -8.1117,
+        28.2258,
+        26.0871,
+        16.5769,
+        -4.1843,
+        -13.4214,
+        -21.6347,
+        -54.409,
+        -55.912,
+        -57.5461,
+        -50.1726,
+        -66.8697,
+        -66.6432
+      ],
+      "midi": 65,
+      "name": "F4",
+      "neighbour_db": [
+        0.4012,
+        -22.4733,
+        -51.2049,
+        -27.9635,
+        -26.0481,
+        -44.54,
+        -52.9178,
+        -58.0635,
+        -60.1152,
+        -66.1298,
+        -67.6597,
+        -68.4704,
+        -72.0996,
+        -76.2382,
+        -74.777,
+        -79.0824
+      ],
+      "prominence_db": [
+        35.6604,
+        33.1539,
+        56.3827,
+        19.8519,
+        54.2739,
+        70.6271,
+        69.4947,
+        53.8792,
+        46.6938,
+        44.4951,
+        13.2507,
+        12.5584,
+        14.5535,
+        26.0657,
+        7.9073,
+        12.4392
+      ],
+      "relative_db": [
+        0.0,
+        -25.381,
+        -30.8838,
+        -44.1732,
+        -7.8358,
+        -9.9745,
+        -19.4846,
+        -40.2458,
+        -49.4829,
+        -57.6962,
+        -90.4705,
+        -91.9736,
+        -93.6077,
+        -86.2341,
+        -102.9312,
+        -102.7048
+      ],
+      "start_s": 104.832
+    },
+    {
+      "f0_hz": 347.8261,
+      "level_db": [
+        37.1909,
+        21.431,
+        25.4169,
+        24.5307,
+        47.2457,
+        44.4717,
+        37.8939,
+        15.9495,
+        29.2532,
+        13.2723,
+        -7.3481,
+        -28.9436,
+        -26.955,
+        -3.9069,
+        -29.9833,
+        -44.0016
+      ],
+      "midi": 65,
+      "name": "F4",
+      "neighbour_db": [
+        5.3658,
+        -12.3273,
+        -30.3822,
+        -20.8105,
+        -3.1538,
+        -11.2697,
+        -9.1362,
+        -20.201,
+        -26.512,
+        -22.2093,
+        -38.6651,
+        -35.0278,
+        -46.8987,
+        -55.8108,
+        -55.1668,
+        -65.1433
+      ],
+      "prominence_db": [
+        31.8251,
+        33.7583,
+        55.7991,
+        45.3412,
+        50.3995,
+        55.7414,
+        47.0301,
+        36.1505,
+        55.7652,
+        35.4817,
+        31.317,
+        6.0843,
+        19.9437,
+        51.9039,
+        25.1835,
+        21.1416
+      ],
+      "relative_db": [
+        0.0,
+        -15.7599,
+        -11.7741,
+        -12.6603,
+        10.0547,
+        7.2808,
+        0.703,
+        -21.2414,
+        -7.9378,
+        -23.9186,
+        -44.539,
+        -66.1345,
+        -64.1459,
+        -41.0978,
+        -67.1742,
+        -81.1926
+      ],
+      "start_s": 107.8613
+    },
+    {
+      "f0_hz": 263.7363,
+      "level_db": [
+        48.1463,
+        47.6209,
+        44.4484,
+        43.6535,
+        48.3641,
+        49.9101,
+        49.1605,
+        47.1059,
+        47.452,
+        42.5319,
+        38.625,
+        36.384,
+        31.4083,
+        41.6102,
+        41.0339,
+        45.8946
+      ],
+      "midi": 60,
+      "name": "C4",
+      "neighbour_db": [
+        23.7821,
+        10.8534,
+        0.6433,
+        -0.0156,
+        1.7907,
+        5.0666,
+        7.9958,
+        14.5854,
+        17.8394,
+        16.8007,
+        12.8391,
+        14.0487,
+        10.5446,
+        17.974,
+        14.9407,
+        16.74
+      ],
+      "prominence_db": [
+        24.3642,
+        36.7675,
+        43.8051,
+        43.6691,
+        46.5733,
+        44.8435,
+        41.1646,
+        32.5205,
+        29.6126,
+        25.7312,
+        25.7859,
+        22.3353,
+        20.8637,
+        23.6362,
+        26.0932,
+        29.1547
+      ],
+      "relative_db": [
+        0.0,
+        -0.5254,
+        -3.6978,
+        -4.4928,
+        0.2178,
+        1.7638,
+        1.0142,
+        -1.0404,
+        -0.6943,
+        -5.6144,
+        -9.5213,
+        -11.7623,
+        -16.738,
+        -6.5361,
+        -7.1124,
+        -2.2517
+      ],
+      "start_s": 123.648
+    }
+  ],
+  "schema_version": 4,
+  "sections": [
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": -0.3388,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 25.0,
+      "id": "section_0",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "lead",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 15.653,
+        "peak_db": -3.14,
+        "rms_db": -18.7929
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -35.2482,
+          -31.3672,
+          -28.6576,
+          -32.0955,
+          -24.1309,
+          -25.3134,
+          -40.7247,
+          -87.433
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2360.6749,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3468.75
+      },
+      "start_s": 0.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "clean",
+        "gain_character_confidence": 0.6,
+        "odd_to_even_harmonic_ratio_db": -23.8723,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 49.0,
+      "id": "section_1",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "background",
+        "tone_profile": "clean"
+      },
+      "loudness": {
+        "crest_factor_db": 31.5651,
+        "peak_db": -7.3552,
+        "rms_db": -38.9202
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -97.8492,
+          -64.9502,
+          -52.2941,
+          -50.2534,
+          -41.2212,
+          -53.0177,
+          -83.1522,
+          -118.6584
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 1568.5387,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 2484.375
+      },
+      "start_s": 25.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.7356,
+        "reverb_rt60_s": 2.9227
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "clean",
+        "gain_character_confidence": 1.0,
+        "odd_to_even_harmonic_ratio_db": 0.0,
+        "thd_estimate_pct": 0.0,
+        "thd_reliable": true
+      },
+      "end_s": 99.0,
+      "id": "section_2",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "lead",
+        "tone_profile": "clean"
+      },
+      "loudness": {
+        "crest_factor_db": 15.7271,
+        "peak_db": -3.8324,
+        "rms_db": -19.5595
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -34.8607,
+          -30.647,
+          -29.1572,
+          -35.2885,
+          -25.0366,
+          -26.2323,
+          -41.1295,
+          -99.4172
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2498.0339,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3515.625
+      },
+      "start_s": 49.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "distortion",
+        "gain_character_confidence": 0.5,
+        "odd_to_even_harmonic_ratio_db": 5.6538,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 109.0,
+      "id": "section_3",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "background",
+        "tone_profile": "distortion"
+      },
+      "loudness": {
+        "crest_factor_db": 26.482,
+        "peak_db": -11.1528,
+        "rms_db": -37.6347
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -98.8233,
+          -67.0621,
+          -52.8976,
+          -55.3596,
+          -39.2908,
+          -54.6267,
+          -80.9177,
+          -117.7424
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 1598.7233,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 2437.5
+      },
+      "start_s": 99.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.6271,
+        "reverb_rt60_s": 2.1615
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "clean",
+        "gain_character_confidence": 0.6,
+        "odd_to_even_harmonic_ratio_db": -2.0661,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 122.0,
+      "id": "section_4",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "background",
+        "tone_profile": "clean"
+      },
+      "loudness": {
+        "crest_factor_db": 27.8075,
+        "peak_db": -40.0352,
+        "rms_db": -67.8427
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -105.0327,
+          -86.157,
+          -73.7985,
+          -86.834,
+          -73.1853,
+          -97.9412,
+          -119.7102,
+          -119.6555
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 430.5991,
+        "spectral_flatness": 0.0099,
+        "spectral_rolloff_hz_85pct": 2109.375
+      },
+      "start_s": 109.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 7,
+        "delay_present": true,
+        "delay_time_ms_estimate": 680,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.7418,
+        "reverb_rt60_s": 3.8837
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": 0.229,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 139.0,
+      "id": "section_5",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "rhythm",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 17.9523,
+        "peak_db": -7.1238,
+        "rms_db": -25.0761
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -42.9725,
+          -37.8621,
+          -36.623,
+          -41.7912,
+          -30.2909,
+          -30.7114,
+          -43.0519,
+          -111.9393
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2857.7627,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3937.5
+      },
+      "start_s": 122.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": -0.7756,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 215.0,
+      "id": "section_6",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "lead",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 16.8285,
+        "peak_db": -2.9952,
+        "rms_db": -19.8237
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -34.4426,
+          -31.5321,
+          -30.5436,
+          -35.6241,
+          -25.0851,
+          -26.192,
+          -41.2272,
+          -94.3276
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2510.7078,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3703.125
+      },
+      "start_s": 139.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": 3.8667,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 228.0,
+      "id": "section_7",
+      "labels": {
+        "dynamics_profile": "rhythmic",
+        "presence": "background",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 26.6705,
+        "peak_db": -43.7539,
+        "rms_db": -70.4245
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -99.0907,
+          -104.2822,
+          -104.7392,
+          -100.9738,
+          -74.4733,
+          -82.7283,
+          -119.3328,
+          -119.8529
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 474.3907,
+        "spectral_flatness": 0.0173,
+        "spectral_rolloff_hz_85pct": 2437.5
+      },
+      "start_s": 215.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 10,
+        "delay_present": true,
+        "delay_time_ms_estimate": 1486,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.4679,
+        "reverb_rt60_s": 8.7335
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": -5.6246,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 292.0,
+      "id": "section_8",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "lead",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 14.9174,
+        "peak_db": -4.713,
+        "rms_db": -19.6304
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -35.2003,
+          -31.6359,
+          -29.4301,
+          -36.4455,
+          -24.9868,
+          -25.9226,
+          -41.3488,
+          -100.2294
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2541.2591,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3656.25
+      },
+      "start_s": 228.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": null,
+        "delay_present": false,
+        "delay_time_ms_estimate": null,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    },
+    {
+      "distortion": {
+        "gain_character": "high_gain",
+        "gain_character_confidence": 0.7,
+        "odd_to_even_harmonic_ratio_db": -0.8878,
+        "thd_estimate_pct": null,
+        "thd_reliable": false
+      },
+      "end_s": 301.1333,
+      "id": "section_9",
+      "labels": {
+        "dynamics_profile": "sparse",
+        "presence": "background",
+        "tone_profile": "high_gain"
+      },
+      "loudness": {
+        "crest_factor_db": 21.1957,
+        "peak_db": -12.4449,
+        "rms_db": -33.6406
+      },
+      "spectrum": {
+        "band_energy_db": [
+          -44.7313,
+          -43.9242,
+          -47.6048,
+          -50.2085,
+          -38.6006,
+          -40.8484,
+          -58.9389,
+          -106.6136
+        ],
+        "bands_hz": [
+          80,
+          160,
+          320,
+          640,
+          1280,
+          2560,
+          5120,
+          10240
+        ],
+        "spectral_centroid_hz": 2134.3934,
+        "spectral_flatness": 0.0,
+        "spectral_rolloff_hz_85pct": 3140.625
+      },
+      "start_s": 292.0,
+      "time_fx": {
+        "delay_confidence": "low",
+        "delay_feedback_estimate_pct": 65,
+        "delay_present": true,
+        "delay_time_ms_estimate": 790,
+        "modulation_depth_estimate": null,
+        "modulation_present": false,
+        "modulation_rate_hz": null,
+        "reverb_rt60_confidence": 0.0,
+        "reverb_rt60_s": null
+      }
+    }
+  ],
+  "source": {
+    "channels": 2,
+    "duration_s": 301.1333,
+    "path": "rhythm.wav",
+    "sample_rate_hz": 96000,
+    "sha256": "16830c8231541b7c35413a4809944c46198cb6636cd65f4f7b7ab809f5e86c59"
+  }
+}

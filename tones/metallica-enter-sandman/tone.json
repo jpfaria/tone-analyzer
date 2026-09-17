@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Metallica",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 331.56,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "7bed48d4f770615597357b4aab565ac5fc8d9832a464fe8e4e0d9b95ae29c4a5"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 331.56,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "afa5dc57e52a45d414d9f3b04334ba439363f7e0cf0518c22d9911b06942c86a"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "metallica-enter-sandman",
+  "song": "Enter Sandman"
+}

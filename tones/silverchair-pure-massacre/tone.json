@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Silverchair",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 298.8,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "b6aba678ae91f3b8ebc65e85ff9406429015a0bd2e19583f426a3c4add0453eb"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 298.8,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "6d09b979321c9f2b79e903598144a28337434a88405dbc3c2939580534aa480e"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "silverchair-pure-massacre",
+  "song": "Pure Massacre"
+}

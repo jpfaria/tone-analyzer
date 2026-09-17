@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "Silverchair",
+  "roles": {
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 318.3804,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "5289dda6739d5c7321677a5c888dfe62b38843fa5317e4d6e9086ab530445c51"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "silverchair-israels-son",
+  "song": "Israel's Son"
+}

@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "Torcuato Mariano",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 387.0051,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "5f8205436209c6cc478b73fb3e056d9e8e5d194823d76c124000da17a2d27cc5"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "torcuato-mariano-segredos",
+  "song": "Segredos"
+}

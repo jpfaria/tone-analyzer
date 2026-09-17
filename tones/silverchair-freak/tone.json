@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Silverchair",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 226.1067,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "76512e1fedc713d1a1d36bf19762de547ca526799cdebd262faedbb41170df33"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 226.1067,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "44a23f01ca38ca8848071bd63398d7601b902dfa6c9732a11e34d8dce799a84e"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "silverchair-freak",
+  "song": "Freak"
+}

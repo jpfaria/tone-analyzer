@@ -1,0 +1,23 @@
+{
+  "aliases": [],
+  "artist": "Green Day",
+  "roles": {
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 181.5333,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "4a4970537d91baeb88aced61daf7ec92c468aba5fbddba5a430ceeb1aefeee75"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "green-day-basket-case",
+  "song": "Basket Case"
+}

@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Nirvana",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 301.1333,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 96000,
+        "separator": null,
+        "sha256": "db56407bdac37b4c5d3f58a1031e33708460be6093eb63c9ed1b1df46934db30"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 301.1333,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 96000,
+        "separator": null,
+        "sha256": "16830c8231541b7c35413a4809944c46198cb6636cd65f4f7b7ab809f5e86c59"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "nirvana-smells-like-teen-spirit",
+  "song": "Smells Like Teen Spirit"
+}

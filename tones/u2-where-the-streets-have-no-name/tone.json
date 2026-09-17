@@ -1,0 +1,51 @@
+{
+  "aliases": [],
+  "artist": "U2",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 276.6667,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "9ae201be6f2a73fb996b69e5319fcc37ac757df73dab69fa3ac84028ddb44157"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 276.6667,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "d8d67ae6aee0a47705164f951b4f11b5657c58313a9f4aef356f3ceb947187ca"
+      },
+      "track": null
+    },
+    "rhythm-2": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 45.3067,
+        "file": "rhythm-2/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "ce1dc1e99cf59be081b2700d916b1025a24478776c2dc203f29652bff6ed66bd"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "u2-where-the-streets-have-no-name",
+  "song": "Where the Streets Have No Name"
+}

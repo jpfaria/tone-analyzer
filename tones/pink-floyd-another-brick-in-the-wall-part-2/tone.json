@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Pink Floyd",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 240.0667,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "6acf75eac0759e703879886129e85ee6d93cd470edf9e961b17ab64cc5498590"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 240.0667,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "ffe2a4d97c98ba1488f0b9697428bc1802da55fdb6e3676036516f911cced8fa"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "pink-floyd-another-brick-in-the-wall-part-2",
+  "song": "Another Brick in the Wall (Part 2)"
+}

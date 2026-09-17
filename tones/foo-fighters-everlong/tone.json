@@ -1,0 +1,37 @@
+{
+  "aliases": [],
+  "artist": "Foo Fighters",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 250.6667,
+        "file": "lead/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "f466cd99a6bcdc8d42fb616c9f489b644d78cfdf487b2868fa7e04992d4a6b15"
+      },
+      "track": null
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-17",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 250.6667,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "08a4961c5db749d3072df8798e250d3290b26e832cb30536a560f6f6e6a3f352"
+      },
+      "track": null
+    }
+  },
+  "schema_version": 1,
+  "slug": "foo-fighters-everlong",
+  "song": "Everlong"
+}
