@@ -39,7 +39,7 @@ class LibraryError(Exception):
 
 def _ascii_words(text: str) -> list[str]:
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii").lower()
-    return re.findall(r"[a-z0-9]+", text)
+    return re.findall(r"[a-z0-9]+", text.replace("'", ""))
 
 
 def _drop_leading_the(words: list[str]) -> list[str]:

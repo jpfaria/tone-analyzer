@@ -33,6 +33,8 @@ def _audio(tmp_path: Path, name: str, payload: bytes) -> Path:
         ("The Outfield", "Your Love", "outfield-your-love"),
         ("CPM 22", "Um Minuto Para o Fim do Mundo", "cpm-22-um-minuto-para-o-fim-do-mundo"),
         ("Pink Floyd", "Another Brick in the Wall, Pt. 2", "pink-floyd-another-brick-in-the-wall-pt-2"),
+        ("Silverchair", "Israel's Son", "silverchair-israels-son"),
+        ("Guns N’ Roses", "Don’t Cry", "guns-n-roses-dont-cry"),
     ],
 )
 def test_slug_is_ascii_lowercase_hyphenated(artist, song, slug):
