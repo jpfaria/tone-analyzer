@@ -28,7 +28,12 @@ from tone_analyzer.analyze import resolve_out_dir
 
 TARGET_SR = 48000
 DEFAULT_MODEL = "htdemucs_6s"
-INSTALL_HINT = "demucs not found — install it: pipx install demucs"
+INSTALL_HINT = (
+    "demucs not found — install it:\n"
+    "  pipx install --python python3.12 demucs\n"
+    "no pipx? macOS: brew install pipx && pipx ensurepath · Linux: python3 -m pip install --user pipx && pipx ensurepath\n"
+    "(validated with demucs 4.1.0 on Python 3.12; open a new shell after ensurepath)"
+)
 STEMS = ("guitar", "no_guitar")
 
 

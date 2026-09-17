@@ -105,7 +105,7 @@ against `artist song`, `song artist`, `song` and each alias. Exact normalized ma
 | `separate <track> [--out-dir DIR] [--model htdemucs_6s]` | run the `demucs` CLI (`--two-stems guitar`), resample `guitar.wav` / `no_guitar.wav` to 48 kHz float | `--out-dir` |
 
 - `tones add` refuses to overwrite an existing role unless `--replace`.
-- `separate` without `demucs` on `PATH` → exit 3 and one line: `demucs not found — install it: pipx install demucs`.
+- `separate` without `demucs` on `PATH` → exit 3 with the install lines: `pipx install --python python3.12 demucs`, and how to get pipx (`brew install pipx` / `pip install --user pipx`).
   It never installs anything. demucs downloads its model on first use: `separate` is the **only**
   command that may reach the network, and only through demucs.
 - 48 kHz is forced because a 44.1 kHz file read as 48 kHz shifted every note +1.5 semitone

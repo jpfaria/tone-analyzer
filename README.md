@@ -14,7 +14,7 @@ belongs to [tone-builder](https://github.com/jpfaria/tone-builder).
 - **`take <wav>`** — one recorded note: pitch, onset, duration, saturated
   samples, noise floor, SNR. Measures only; no verdict.
 - **`separate <track>`** — guitar out of a full mix with [demucs](https://github.com/adefossez/demucs)
-  (`pipx install demucs`, not bundled): `guitar.wav`, `no_guitar.wav`, 48 kHz.
+  (`pipx install --python python3.12 demucs`, not bundled; no pipx → `brew install pipx`): `guitar.wav`, `no_guitar.wav`, 48 kHz.
 - **`tones find|list|add|reanalyze`** — the song library (below).
 - **Obsolete** (they compare two audios — use tone-builder): `compare`,
   `eq-match`, `correction-ir`.

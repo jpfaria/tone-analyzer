@@ -70,8 +70,9 @@ digraph song {
    stored `<role>/fingerprint.json` and show its PNGs; **no audio is asked for**. Several
    hits → ask which. The user wants it redone with new audio → continue at 2.
 2. **Miss → ask for the audio**: an isolated guitar stem, the full track, or both.
-3. **Only the full track** → `which demucs`. Missing → tell the user to run
-   `pipx install demucs` and stop until they do; never install it yourself. Present →
+3. **Only the full track** → `which demucs`. Missing → relay the install lines that
+   `separate` prints (`pipx install --python python3.12 demucs`, and `brew install pipx` first
+   when `pipx` is missing too) and stop until they do; never install it yourself. Present →
    `"$TA" separate <track> --out-dir DIR` → `DIR/guitar.wav` (48 kHz).
 4. **Analyze and store in one step**:
    ```bash

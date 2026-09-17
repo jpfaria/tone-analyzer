@@ -71,7 +71,9 @@ def test_separate_without_demucs_exits_3_with_install_hint(tmp_path, monkeypatch
     empty.mkdir()
     monkeypatch.setenv("PATH", str(empty))
     assert separate.main([str(_track(tmp_path)), "--out-dir", str(tmp_path / "out")]) == 3
-    assert "pipx install demucs" in capsys.readouterr().err
+    err = capsys.readouterr().err
+    assert "pipx install --python python3.12 demucs" in err
+    assert "brew install pipx" in err  # pipx itself is often missing
     assert not (tmp_path / "out" / "guitar.wav").exists()
 
 
