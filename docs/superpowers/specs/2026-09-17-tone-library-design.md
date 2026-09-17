@@ -24,14 +24,16 @@ tone-analyzer holds **information about one audio**. The library therefore store
 | fingerprint, harmonics, spectrograms, PDF of a song's guitar | gear research, sources, presets per device, renders, diffs |
 | where the analyzed audio came from (kind, sha256, separator) | whether a tone matches, EQ, retention |
 
-Audio never enters the repo (copyright; the local references total ~40 GB).
+Audio **is stored** with each entry (jpfaria, 2026-09-17: *"áudio não fica fora — pq eu posso querer reprocessar as análises"*), in Git LFS. The shipped examples are ~2.5 GB of commercial recordings in a public repo: pushing them is the owner's decision.
 
 ## Entry layout
 
 ```
-tones/<slug>/                         slug = <artist>-<song>, ASCII, lowercase, hyphens
+tones/<slug>/                         slug = <artist>-<song>, ASCII, lowercase, hyphens, leading "The" dropped
   tone.json
+  track.<ext>                         the full track, when available
   <role>/                             role = rhythm | lead | guitars | acoustic | clean | …
+    reference.<ext>                   the analyzed guitar audio
     fingerprint.json                  analyze output, source.path reduced to the basename
     spec_global.png  spec_notes.png  spec_section_<i>.png
     analysis.pdf
@@ -75,7 +77,7 @@ above ~H6 (disc +21 dB over the neighbourhood where the stem reads −104 dB). S
 notes; harmonic **levels** are read on the full track. `harmonics.json` exists only when the track
 was available, and `tone.json` says which case each role is.
 
-Measured size: one 236 s role = 1.7 MB (13 files). ~50 roles ≈ 85 MB. Committed as plain git, no LFS.
+Measured size: one 236 s role = 1.7 MB of analysis (13 files) plus its audio. Analysis in plain git; `*.wav|mp3|flac|aif(f)` under `tones/` in Git LFS.
 
 ## Library roots and lookup
 
@@ -99,6 +101,7 @@ against `artist song`, `song artist`, `song` and each alias. Exact normalized ma
 | `tones find <query> [--json]` | search all roots | nothing |
 | `tones list [--json]` | every entry, with roles and reference kind | nothing |
 | `tones add --artist A --song S --role R --analysis DIR --reference-kind K [--reference PATH] [--track PATH] [--separator TXT] [--root DIR]` | copy `DIR` into `<root>/<slug>/<role>/`, strip `source.path`, compute sha256s, create/update `tone.json` | `<root>` (default `~/.tone-analyzer/tones`) |
+| `tones reanalyze <query>\|--all [--role R]` | re-run analyze (+ harmonics on the stored track) from the stored audio | the entry |
 | `separate <track> [--out-dir DIR] [--model htdemucs_6s]` | run the `demucs` CLI (`--two-stems guitar`), resample `guitar.wav` / `no_guitar.wav` to 48 kHz float | `--out-dir` |
 
 - `tones add` refuses to overwrite an existing role unless `--replace`.
@@ -144,7 +147,8 @@ Sources: `~/.openrig/evaluations/*/refs/*.wav` and
   ampero2 `john-mayer-gravity`) are skipped and listed.
 - Everything re-analyzed with the current analyzer (schema 4); old schema-2 fingerprints are not copied.
 - Runs as a one-off script in `scripts/import_openrig_evaluations.py`, reading only, writing only into
-  `tones/`. Expected ≈ 40 s per role.
+  `tones/`. Expected ≈ 40 s per role. Audio is copied with each entry.
+- Same slug and role with different audio (U2 *Streets*: two different rhythm takes) → the second becomes `rhythm-2`.
 
 ## Errors
 

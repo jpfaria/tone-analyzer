@@ -41,3 +41,14 @@ def test_compare_no_network(no_network, clean_di_path: Path, distorted_di_path: 
         "--out-dir", str(tmp_path / "out"),
     ])
     assert rc == 0
+
+
+def test_tones_no_network(no_network, clean_di_path: Path, tmp_path: Path, monkeypatch) -> None:
+    from tone_analyzer import tones
+
+    monkeypatch.setenv("TONE_ANALYZER_TONES_PATH", str(tmp_path / "lib"))
+    monkeypatch.setenv("HOME", str(tmp_path / "h"))
+    entry = tones.add(tmp_path / "lib", "A", "B", "lead",
+                      tones.analyze_audio(clean_di_path, tmp_path / "an"), "stem", reference=clean_di_path)
+    assert tones.find("a b") and tones.list_entries()
+    assert tones.reanalyze(entry) == ["lead"]

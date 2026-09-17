@@ -13,6 +13,9 @@ belongs to [tone-builder](https://github.com/jpfaria/tone-builder).
   note at a given attack time (e.g. inside a full mix) or of the detected notes.
 - **`take <wav>`** — one recorded note: pitch, onset, duration, saturated
   samples, noise floor, SNR. Measures only; no verdict.
+- **`separate <track>`** — guitar out of a full mix with [demucs](https://github.com/adefossez/demucs)
+  (`pipx install demucs`, not bundled): `guitar.wav`, `no_guitar.wav`, 48 kHz.
+- **`tones find|list|add|reanalyze`** — the song library (below).
 - **Obsolete** (they compare two audios — use tone-builder): `compare`,
   `eq-match`, `correction-ir`.
 
@@ -36,6 +39,31 @@ Requires Python 3.11+ and `libsndfile` (macOS: bundled with the wheel; Debian/Ub
 The `tone-analyzer` skill bootstraps its own venv on first use and exposes the
 same commands to the agent. It never touches a rig — orchestrators
 (tone-builder) consume its JSON.
+
+## Song library
+
+Songs already analyzed are stored so nobody analyzes them twice. Lookup order:
+`$TONE_ANALYZER_TONES_PATH`, `~/.tone-analyzer/tones/` (your own), then `tones/` in
+this repo (shipped as examples).
+
+```
+tones/<artist>-<song>/
+  tone.json                 artist, song, per role: reference kind (stem|separated|track), sha256, analyzer version
+  track.<ext>               the full track, when available (harmonic levels are read on it)
+  <role>/                   lead, rhythm, acoustic, …
+    reference.<ext>         the analyzed guitar audio
+    fingerprint.json  harmonics.json  analysis.pdf  spec_*.png
+```
+
+```bash
+tone-analyzer tones find creep
+tone-analyzer tones add --artist Radiohead --song Creep --role lead --analysis OUT --reference-kind stem --reference lead.wav
+tone-analyzer tones reanalyze --all        # after an analyzer change, from the stored audio
+```
+
+Audio in `tones/` is stored with Git LFS (`git lfs install` before cloning).
+Separated stems locate notes; harmonic levels are read on the full track, because
+separation erases harmonics above ~H6.
 
 ## Output schemas
 
