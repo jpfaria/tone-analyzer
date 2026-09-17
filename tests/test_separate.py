@@ -15,7 +15,10 @@ from tone_analyzer import separate
 FAKE_DEMUCS = r'''#!{python}
 import sys, pathlib
 import numpy as np, soundfile as sf
+import os
 args = sys.argv[1:]
+if os.environ.get("FAKE_DEMUCS_ARGS"):
+    pathlib.Path(os.environ["FAKE_DEMUCS_ARGS"]).write_text("\n".join(args))
 if {fail}:
     print("boom: model exploded", file=sys.stderr); sys.exit(7)
 out = pathlib.Path(args[args.index("-o") + 1]); model = args[args.index("-n") + 1]
@@ -83,3 +86,13 @@ def test_separate_demucs_failure_exits_1_and_writes_nothing(tmp_path, monkeypatc
     assert separate.main([str(_track(tmp_path)), "--out-dir", str(out)]) == 1
     assert "model exploded" in capsys.readouterr().err
     assert not (out / "guitar.wav").exists()
+
+
+def test_separate_runs_demucs_on_the_cpu(tmp_path, monkeypatch):
+    """htdemucs_6s dies on Apple MPS (conv1d > 65536 output channels); demucs picks MPS by itself."""
+    _install_fake(tmp_path, monkeypatch)
+    seen = tmp_path / "args.txt"
+    monkeypatch.setenv("FAKE_DEMUCS_ARGS", str(seen))
+    assert separate.main([str(_track(tmp_path)), "--out-dir", str(tmp_path / "out")]) == 0
+    args = seen.read_text().splitlines()
+    assert args[args.index("-d") + 1] == "cpu"

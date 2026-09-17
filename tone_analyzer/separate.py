@@ -63,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
 
     with tempfile.TemporaryDirectory(prefix="tone-analyzer-demucs-") as tmp:
         proc = subprocess.run(
-            [demucs, "--two-stems", "guitar", "-n", a.model, "-o", tmp, str(track)],
+            [demucs, "-d", "cpu", "--two-stems", "guitar", "-n", a.model, "-o", tmp, str(track)],
             capture_output=True, text=True,
         )
         stem_dir = Path(tmp) / a.model / track.stem
