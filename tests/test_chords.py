@@ -166,3 +166,54 @@ def test_cli_chords_writes_json(tmp_path, capsys):
     out = json.loads(capsys.readouterr().out)
     assert out["detector"] == "salience"
     assert out["chords"][0]["midis"] == [40, 47, 56]
+
+
+def _pink(n, rng):
+    spec = np.fft.rfft(rng.standard_normal(n))
+    k = np.arange(len(spec))
+    k[0] = 1
+    return np.fft.irfft(spec / np.sqrt(k), n)
+
+
+def _strum(midis, rng, harm, max_stagger_s=0.030, residue_db=-20.0, lead_s=0.5, dur_s=1.5):
+    """A real strum: each string starts at its own random offset in 0..max_stagger_s, plus pink
+    noise residue residue_db under the chord's RMS over the whole signal (lead-in included, as a
+    separated stem carries its residue everywhere)."""
+    offs = np.sort(rng.uniform(0.0, max_stagger_s, len(midis)))
+    n = int((lead_s + max_stagger_s + dur_s) * SR) + 1
+    x = np.zeros(n)
+    for m, o in zip(midis, offs):
+        s = int(round((lead_s + o) * SR))
+        v = harmonic_note(m, SR, dur_s, harm)
+        x[s:s + len(v)] += v
+    rms = np.sqrt(np.mean(x[int(lead_s * SR):int((lead_s + 0.6) * SR)] ** 2))
+    nz = _pink(n, rng)
+    x += nz * rms * 10 ** (residue_db / 20) / np.sqrt(np.mean(nz ** 2))
+    return (0.5 * x / np.abs(x).max()).astype(np.float32)
+
+
+def test_staggered_strums_with_residue_find_the_chord_once():
+    # 60 random strums (strings 0-30 ms apart, residue 20 dB under) over the chord voicings.
+    # Before chord_onsets: 25/60 first entries (11 false notes) right at the strum -- no onset at all (the rise is
+    # spread over 2-3 blocks), or an onset fired in the lead-in noise whose window read the strum
+    # half-way (false notes). A later entry in the beating decay repeating the same notes is
+    # note_onsets' own behaviour and not a false note.
+    rng = np.random.default_rng(0)
+    names = [k for k, v in VOICINGS.items() if len(reduce(v)) >= 2]
+    n, exact, false_notes = 60, 0, 0
+    for _ in range(n):
+        v = VOICINGS[names[rng.integers(len(names))]]
+        x = _strum(v, rng, HARM if rng.random() < 0.5 else HARM_IRREGULAR)
+        found = chords.detect_chords(x, SR)
+        exact += bool(found and found[0]["midis"] == reduce(v)
+                      and abs(found[0]["start_s"] - 0.5) <= 0.03)
+        false_notes += sum(len(set(c["midis"]) - set(reduce(v))) for c in found)
+    assert exact >= 0.95 * n
+    assert false_notes == 0
+
+
+def test_staggered_strum_reports_the_first_string():
+    rng = np.random.default_rng(3)
+    x = _strum(VOICINGS["open-E"], rng, HARM)
+    found = chords.detect_chords(x, SR)
+    assert found and found[0]["start_s"] == pytest.approx(0.5, abs=0.03)

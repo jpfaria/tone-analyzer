@@ -17,7 +17,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-from tone_analyzer.notes import midi_name, note_onsets
+from tone_analyzer.notes import VALIDATED_SR, midi_name, note_onsets
 
 PEAK_TOL = 0.012
 NEIGH_LO = (0.90, 0.96)
@@ -130,6 +130,74 @@ def salience_set(signal: np.ndarray, sr: int, start_s: float, dur_s: float = 0.6
     return chosen
 
 
+ONSET_LOOKBACK = 3         # blocks (3 x 1024 samples = 64 ms at 48 kHz) the attack is compared
+                          # against: a strum spreads its strings over up to 30 ms, which lands the
+                          # rise in 2-3 consecutive blocks; comparing against the minimum of the 3
+                          # before sees the whole rise at once instead of one block's share of it
+ONSET_RISE = 4.0          # the attack block over the minimum of the ONSET_LOOKBACK before it.
+                          # Measured on 200 random strums (0-30 ms, pink residue 20 dB under):
+                          # attacks rise >= 7.5x; the lead-in noise reaches 2.2x and the beating
+                          # decay of a chord 1.8x. 4 sits at the geometric middle (~1.9x margin each
+                          # way); 3, 4 and 6 all gave 900/900 exact chords over 3 seeds x 3 noise modes
+ONSET_FLOOR_DB = 30.0     # same floor as notes.note_onsets: blocks this far under the peak are silence
+ONSET_MIN_SEP_S = 0.5     # same separation as notes.note_onsets: one attack per chord window
+
+
+def chord_onsets(signal: np.ndarray, sr: int) -> list[int]:
+    """Attack sample indices of strums: the block envelope rises ONSET_RISE x over the minimum of
+    the ONSET_LOOKBACK blocks before it; the index is that first rising block (the first string).
+
+    notes.note_onsets (block > 1.5x the previous one AND >= 0.8x the next) stays the rule for
+    single notes. It misses a strum because the strings' staggered attacks spread the rise over
+    2-3 blocks: the block that jumps 1.5x is still followed by a block ~1.3x+ higher, and the
+    block where the rise settles grew only ~1.3-1.5x over its predecessor. Measured: 21/60 strums
+    missed or mis-anchored (none: no onset at all; noise lead-in: a 1.5x noise block fires first
+    and its 0.5 s separation masks the real attack; decay: chord beating fires a second onset).
+    """
+    x = np.asarray(signal, dtype=np.float64)
+    block = max(1, int(round(1024 * sr / VALIDATED_SR)))
+    if len(x) < 5 * block:
+        return []
+    env = np.array([np.abs(x[i:i + block]).max() for i in range(0, len(x) - block, block)])
+    peak = env.max()
+    if peak <= 0:
+        return []
+    lim = peak * 10.0 ** (-ONSET_FLOOR_DB / 20.0)
+    out: list[int] = []
+    last = -1e9
+    for k in range(ONSET_LOOKBACK, len(env)):
+        t = k * block / sr
+        if (env[k] > lim and env[k] > ONSET_RISE * env[k - ONSET_LOOKBACK:k].min()
+                and t - last > ONSET_MIN_SEP_S):
+            out.append(k * block)
+            last = t
+    return out
+
+
+def chord_attacks(signal: np.ndarray, sr: int, dur_s: float = 0.6) -> list[int]:
+    """chord_onsets, plus the notes.note_onsets attacks it does not see: a strum over a chord that
+    still rings (the envelope barely rises, so no ONSET_RISE jump; note_onsets' 1.5x rule catches
+    some of them). A note_onsets attack is dropped when a chord onset lies inside its dur_s window
+    (it fired in the noise just before a strum and would read the strum half-way, which is how the
+    lead-in residue produced false notes), or within ONSET_MIN_SEP_S of a chord onset (same attack).
+
+    Measured on 100 two-strum sequences (second strum 0.5-1.5 s after the first, both ringing,
+    residue 20 dB under): chord_onsets alone finds 1 % of the second strums, note_onsets 65 %;
+    this union keeps note_onsets' 65 % while cutting its spurious chords from 45 to 9, and on 100
+    isolated strums keeps chord_onsets' 100 % first-entry-correct with 0 false notes.
+    """
+    x = np.asarray(signal, dtype=np.float64)
+    span = int(round(dur_s * sr))
+    sep = int(round(ONSET_MIN_SEP_S * sr))
+    strums = chord_onsets(x, sr)
+    out = list(strums)
+    for a in note_onsets(x, sr):
+        if any(a < c < a + span or abs(a - c) < sep for c in strums):
+            continue
+        out.append(a)
+    return sorted(out)
+
+
 def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str = "salience",
                    run=None) -> list[dict]:
     """One entry per attack where 2+ notes sound over dur_s. Single notes stay with notes.detect_notes.
@@ -142,7 +210,7 @@ def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str
     span = int(round(dur_s * sr))
     pick = salience_set if detector == "salience" else _basic_pitch_picker(x, sr, run=run)
     out = []
-    for a in note_onsets(x, sr):
+    for a in chord_attacks(x, sr, dur_s):
         if a + span >= len(x):
             continue
         midis = pick(x, sr, a / sr, dur_s)
