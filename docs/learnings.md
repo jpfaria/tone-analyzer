@@ -1,11 +1,22 @@
 ---
 tags: [tone-analyzer, learnings]
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-09-18
 source: claude-code-sessions
 ---
 
 # tone-analyzer — Learnings
+
+## 2026-09-18 — `basic-pitch` chord detector is BLOCKED: hard numpy conflict with tensorflow-macos
+
+- **Gotcha / invariant:** `.venv/bin/pip install -q "basic-pitch[onnx]"` (basic-pitch 0.3.0) installs and, after two follow-up fixes (`pip install "setuptools<81"` for `resampy`'s `pkg_resources`, since setuptools ≥81 dropped it), imports fine — but only because pip silently downgraded `numpy` to 1.26.4. Reinstalling the project's pinned `numpy==2.1.3` (`pyproject.toml` line 14) then makes `from basic_pitch.inference import predict; from basic_pitch import ICASSP_2022_MODEL_PATH` fail on import with:
+  ```
+  ImportError: A module that was compiled using NumPy 1.x cannot be run in
+  NumPy 2.1.3 as it may crash. ... numpy.core._multiarray_umath failed to import
+  ```
+  Root cause: basic-pitch depends on `tensorflow-macos`, which pins `numpy<2.0.0,>=1.26.0` and is imported eagerly the moment `basic_pitch.inference`/`ICASSP_2022_MODEL_PATH` is touched — even though we only asked for the ONNX runtime via `basic-pitch[onnx]`. `tensorflow-macos` and `numpy==2.1.3` cannot coexist in this venv (Python 3.12.3, macOS/arm64).
+- **Why it matters:** Task 3 of issue #1 (basic-pitch as an optional chord detector) is out of scope per the brief's Step 1 gate ("sem wheel para esta versão do Python/arquitetura" — here it's a hard runtime dependency conflict, same effect: cannot install alongside the pinned numpy). Do not add `basic-pitch` to `pyproject.toml` optional-dependencies until basic-pitch drops its `tensorflow-macos` import-time dependency (or ships a build against numpy 2.x). The chord detector default stays `salience`.
+- **Applies to:** `tone_analyzer/chords.py` (`_basic_pitch_picker` stays a stub that raises), `pyproject.toml` (`numpy==2.1.3` pin, `[project.optional-dependencies]`).
 
 ## 2026-09-17 — demucs `htdemucs_6s` dies on Apple MPS: force `-d cpu`
 
