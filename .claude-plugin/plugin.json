@@ -1,7 +1,7 @@
 {
   "name": "tone-analyzer",
   "description": "Analyzes ONE guitar audio: metrics JSON, PDF report and spectrograms, including detected notes, per-harmonic levels and per-take checks. Comparing two audios (compare/eq-match/correction-ir, now obsolete) belongs to tone-builder.",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "author": {
     "name": "João Paulo"
   },
