@@ -8,7 +8,14 @@ chord can be read at the harmonics of each of its notes.
 
 from __future__ import annotations
 
+import csv
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
+
 import numpy as np
+import soundfile as sf
 
 from tone_analyzer.notes import midi_name, note_onsets
 
@@ -123,13 +130,17 @@ def salience_set(signal: np.ndarray, sr: int, start_s: float, dur_s: float = 0.6
     return chosen
 
 
-def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str = "salience") -> list[dict]:
-    """One entry per attack where 2+ notes sound over dur_s. Single notes stay with notes.detect_notes."""
+def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str = "salience",
+                   run=None) -> list[dict]:
+    """One entry per attack where 2+ notes sound over dur_s. Single notes stay with notes.detect_notes.
+
+    `run` is only used by the basic-pitch detector (injected subprocess runner, for tests).
+    """
     if detector not in DETECTORS:
         raise ValueError(f"unknown chord detector {detector!r} ({', '.join(DETECTORS)})")
     x = np.asarray(signal, dtype=np.float64)
     span = int(round(dur_s * sr))
-    pick = salience_set if detector == "salience" else _basic_pitch_picker(x, sr)
+    pick = salience_set if detector == "salience" else _basic_pitch_picker(x, sr, run=run)
     out = []
     for a in note_onsets(x, sr):
         if a + span >= len(x):
@@ -140,5 +151,45 @@ def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str
     return out
 
 
-def _basic_pitch_picker(x: np.ndarray, sr: int):
-    raise ValueError("basic-pitch detector: not implemented yet")   # replaced in Task 3
+BP_ACTIVE = 0.75   # a note counts when it sounds over this fraction of the window
+BP_INSTALL_HINT = (
+    "basic-pitch not found — install it:\n"
+    "  pipx install --python python3.11 'basic-pitch[onnx]'\n"
+    "no pipx? macOS: brew install pipx && pipx ensurepath · Linux: python3 -m pip install --user pipx && pipx ensurepath\n"
+    "(validated with basic-pitch 0.3.0; PyPI ships no wheel past Python 3.11 and it cannot install "
+    "into this project's own venv — numpy==2.1.3 conflicts with its tensorflow-macos dependency, "
+    "and even with numpy<2 pinned it needs scipy<1.13 for scipy.signal.gaussian — so it runs as a "
+    "separate CLI process, same pattern as demucs in separate.py)"
+)
+
+
+def _basic_pitch_picker(x: np.ndarray, sr: int, run=None):
+    """Run the basic-pitch CLI out of process (it cannot share this venv's numpy/scipy pins) and
+    read back its note-events CSV. Not reinvented, not installed here: missing -> ValueError with
+    the install hint, same pattern as demucs in separate.py.
+    """
+    run = run or subprocess.run
+    bp = shutil.which("basic-pitch")
+    if bp is None:
+        raise ValueError(BP_INSTALL_HINT)
+
+    with tempfile.TemporaryDirectory(prefix="tone-analyzer-bp-") as tmp:
+        tmp_path = Path(tmp)
+        wav = tmp_path / "in.wav"
+        sf.write(str(wav), x.astype(np.float32), sr, subtype="FLOAT")
+        proc = run([bp, tmp, str(wav), "--save-note-events", "--model-serialization", "onnx"],
+                   capture_output=True, text=True)
+        csv_path = tmp_path / "in_basic_pitch.csv"
+        if proc.returncode != 0 or not csv_path.is_file():
+            tail = "\n".join((proc.stderr or proc.stdout or "").strip().splitlines()[-20:])
+            raise ValueError(f"basic-pitch failed (exit {proc.returncode}):\n{tail}")
+        events: list[tuple[float, float, int]] = []
+        with open(csv_path, newline="", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                events.append((float(row["start_time_s"]), float(row["end_time_s"]), int(round(float(row["pitch_midi"])))))
+
+    def pick(_x, _sr, start_s: float, dur_s: float) -> list[int]:
+        end = start_s + dur_s
+        on = {m for s, e, m in events if min(e, end) - max(s, start_s) >= BP_ACTIVE * dur_s}
+        return sorted(m for m in on if m in MIDI_RANGE)
+    return pick

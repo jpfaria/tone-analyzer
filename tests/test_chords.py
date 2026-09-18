@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import csv
+import shutil
+import subprocess
+from pathlib import Path
+
 import numpy as np
 import pytest
 
@@ -100,3 +105,50 @@ def test_detect_chords_reports_attack_and_names():
 def test_unknown_detector_is_an_error():
     with pytest.raises(ValueError):
         chords.detect_chords(_chord([40, 47]), SR, detector="nope")
+
+
+def _fake_basic_pitch_run(rows):
+    """A fake subprocess runner standing in for the basic-pitch CLI: writes the note-events CSV
+    the real CLI would write (same columns, same `<stem>_basic_pitch.csv` name in the out dir)."""
+    def run(args, capture_output, text):
+        out_dir, wav_path = Path(args[1]), Path(args[2])
+        csv_path = out_dir / f"{wav_path.stem}_basic_pitch.csv"
+        with open(csv_path, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["start_time_s", "end_time_s", "pitch_midi", "velocity", "pitch_bend"])
+            for start_s, end_s, midi in rows:
+                w.writerow([start_s, end_s, midi, 100, 1])
+        return subprocess.CompletedProcess(args, 0, stdout="", stderr="")
+    return run
+
+
+def test_basic_pitch_finds_a_power_chord(monkeypatch):
+    # basic-pitch does not octave-reduce: [40, 47, 56] (no octave), not the salience-style [40, 47, 52].
+    monkeypatch.setattr(chords.shutil, "which", lambda name: "/usr/local/bin/basic-pitch")
+    x = _chord([40, 47, 56])
+    run = _fake_basic_pitch_run([(0.0, 3.0, 40), (0.0, 3.0, 47), (0.0, 3.0, 56)])
+    found = chords.detect_chords(x, SR, detector="basic-pitch", run=run)
+    assert found and found[0]["midis"] == [40, 47, 56]
+
+
+def test_basic_pitch_ignores_notes_below_the_active_fraction(monkeypatch):
+    monkeypatch.setattr(chords.shutil, "which", lambda name: "/usr/local/bin/basic-pitch")
+    x = _chord([40, 47, 56])
+    # 40 and 47 cover the whole window; 56 only a sliver of it (well under BP_ACTIVE) and 90 sits
+    # outside MIDI_RANGE entirely -- neither should be picked.
+    run = _fake_basic_pitch_run([(0.0, 3.0, 40), (0.0, 3.0, 47), (0.5, 0.55, 56), (0.0, 3.0, 90)])
+    found = chords.detect_chords(x, SR, detector="basic-pitch", run=run)
+    assert found and found[0]["midis"] == [40, 47]
+
+
+def test_basic_pitch_missing_gives_install_hint(monkeypatch):
+    monkeypatch.setattr(chords.shutil, "which", lambda name: None)
+    with pytest.raises(ValueError, match="basic-pitch not found"):
+        chords.detect_chords(_chord([40, 47]), SR, detector="basic-pitch")
+
+
+@pytest.mark.skipif(shutil.which("basic-pitch") is None, reason="basic-pitch CLI not installed")
+def test_basic_pitch_real_cli_finds_power_chord_notes():
+    x = np.concatenate([_chord([40, 47, 56]), np.zeros(SR, np.float32)])
+    found = chords.detect_chords(x, SR, detector="basic-pitch")
+    assert found and {40, 47, 56}.issubset(set(found[0]["midis"]))
