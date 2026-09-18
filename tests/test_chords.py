@@ -175,16 +175,16 @@ def _pink(n, rng):
     return np.fft.irfft(spec / np.sqrt(k), n)
 
 
-def _strum(midis, rng, harm, max_stagger_s=0.030, residue_db=-20.0, lead_s=0.5, dur_s=1.5):
+def _strum(midis, rng, harm, max_stagger_s=0.030, residue_db=-20.0, lead_s=0.5, note_s=1.5):
     """A real strum: each string starts at its own random offset in 0..max_stagger_s, plus pink
     noise residue residue_db under the chord's RMS over the whole signal (lead-in included, as a
     separated stem carries its residue everywhere)."""
     offs = np.sort(rng.uniform(0.0, max_stagger_s, len(midis)))
-    n = int((lead_s + max_stagger_s + dur_s) * SR) + 1
+    n = int((lead_s + max_stagger_s + note_s) * SR) + 1
     x = np.zeros(n)
     for m, o in zip(midis, offs):
         s = int(round((lead_s + o) * SR))
-        v = harmonic_note(m, SR, dur_s, harm)
+        v = harmonic_note(m, SR, note_s, harm)
         x[s:s + len(v)] += v
     rms = np.sqrt(np.mean(x[int(lead_s * SR):int((lead_s + 0.6) * SR)] ** 2))
     nz = _pink(n, rng)
@@ -217,3 +217,16 @@ def test_staggered_strum_reports_the_first_string():
     x = _strum(VOICINGS["open-E"], rng, HARM)
     found = chords.detect_chords(x, SR)
     assert found and found[0]["start_s"] == pytest.approx(0.5, abs=0.03)
+
+
+@pytest.mark.parametrize("note_at_s, kept", [
+    (0.40, False),   # fired in the noise just before the strum: its window would read the strum half-way
+    (0.70, False),   # same attack, within ONSET_MIN_SEP_S after
+    (1.05, True),    # 0.55 s after, between ONSET_MIN_SEP_S and dur_s: a second strum can live here
+    (1.40, True),    # clearly a later attack
+])
+def test_chord_attacks_merge_rule(monkeypatch, note_at_s, kept):
+    monkeypatch.setattr(chords, "chord_onsets", lambda x, sr: [int(0.5 * SR)])
+    monkeypatch.setattr(chords, "note_onsets", lambda x, sr: [int(note_at_s * SR)])
+    got = chords.chord_attacks(np.zeros(3 * SR), SR, dur_s=0.6)
+    assert got == sorted([int(0.5 * SR)] + ([int(note_at_s * SR)] if kept else []))

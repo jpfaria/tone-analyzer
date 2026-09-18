@@ -139,8 +139,9 @@ ONSET_RISE = 4.0          # the attack block over the minimum of the ONSET_LOOKB
                           # attacks rise >= 7.5x; the lead-in noise reaches 2.2x and the beating
                           # decay of a chord 1.8x. 4 sits at the geometric middle (~1.9x margin each
                           # way); 3, 4 and 6 all gave 900/900 exact chords over 3 seeds x 3 noise modes
-ONSET_FLOOR_DB = 30.0     # same floor as notes.note_onsets: blocks this far under the peak are silence
-ONSET_MIN_SEP_S = 0.5     # same separation as notes.note_onsets: one attack per chord window
+ONSET_FLOOR_DB = 30.0     # mirrors notes.note_onsets(floor_rel_db=30.0): blocks this far under the
+                          # peak are silence
+ONSET_MIN_SEP_S = 0.5     # mirrors notes.note_onsets(min_sep_s=0.5): one attack per chord window
 
 
 def chord_onsets(signal: np.ndarray, sr: int) -> list[int]:
@@ -185,6 +186,13 @@ def chord_attacks(signal: np.ndarray, sr: int, dur_s: float = 0.6) -> list[int]:
     residue 20 dB under): chord_onsets alone finds 1 % of the second strums, note_onsets 65 %;
     this union keeps note_onsets' 65 % while cutting its spurious chords from 45 to 9, and on 100
     isolated strums keeps chord_onsets' 100 % first-entry-correct with 0 false notes.
+
+    The rule is deliberately asymmetric: a note_onsets attack 0.5 s .. dur_s AFTER a chord onset is
+    kept. Measured with a symmetric rule (drop anything within dur_s on either side), 100 two-strum
+    sequences with the second strum 0.5-0.6 s after the first: second strum found 35 % (15 % with
+    the right set) -> 0 %, spurious chords 12 -> 12; over gaps 0.5-1.5 s: found 65 % -> 57 %,
+    spurious 9 -> 8. What the symmetric rule removes on 100 isolated strums is 1 repeat entry with
+    the same notes (no false note). Real strums live in that gap, so they stay.
     """
     x = np.asarray(signal, dtype=np.float64)
     span = int(round(dur_s * sr))
