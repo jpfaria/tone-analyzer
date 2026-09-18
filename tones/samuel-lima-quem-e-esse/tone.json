@@ -4,16 +4,16 @@
   ],
   "artist": "Samuel Lima",
   "roles": {
-    "lead": {
-      "analyzer_version": "0.3.0",
+    "guitars": {
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 461.3573,
-        "file": "lead/reference.wav",
+        "file": "guitars/reference.wav",
         "kind": "separated",
         "sample_rate_hz": 48000,
-        "separator": "demucs",
+        "separator": "demucs htdemucs_6s",
         "sha256": "7c3e7c63bcf35d8ba808d4b23ed1d3ae9a58bb68ba2d6aa03a54b936317a6d2b"
       },
       "track": {

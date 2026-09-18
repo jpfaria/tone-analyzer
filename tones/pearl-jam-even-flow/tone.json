@@ -2,17 +2,77 @@
   "aliases": [],
   "artist": "Pearl Jam",
   "roles": {
-    "lead": {
-      "analyzer_version": "0.3.0",
+    "base": {
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 293.0933,
-        "file": "lead/reference.wav",
+        "file": "base/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "e7afcf15b5f19a1d404ef3a7c7ea8295d8f796c74bd830e05b7decd497f552cb"
+      },
+      "track": {
+        "duration_s": 293.0933,
+        "file": "track.wav",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "c414f70d9fb913783bcb69158990f4b19fb0b86c9d028fce5036aa777d279150"
+      }
+    },
+    "guitars": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 293.0933,
+        "file": "guitars/reference.wav",
         "kind": "separated",
         "sample_rate_hz": 48000,
         "separator": "demucs htdemucs_6s",
         "sha256": "7cc87d9487c90008b6e89e7339cab34661a64205b68f214f10c7f9e29f922506"
+      },
+      "track": {
+        "duration_s": 293.0933,
+        "file": "track.wav",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "c414f70d9fb913783bcb69158990f4b19fb0b86c9d028fce5036aa777d279150"
+      }
+    },
+    "rhythm": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 293.0933,
+        "file": "rhythm/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "32b60e9252c65111922554ae4727becc9f0e32624c0ba1da9c50e178a5e006e7"
+      },
+      "track": {
+        "duration_s": 293.0933,
+        "file": "track.wav",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "c414f70d9fb913783bcb69158990f4b19fb0b86c9d028fce5036aa777d279150"
+      }
+    },
+    "solo": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 293.0933,
+        "file": "solo/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 48000,
+        "separator": null,
+        "sha256": "7f47dce1c0d862032ac4f6d2fa666b828493eb6447578bf17cac5c0398a215e7"
       },
       "track": {
         "duration_s": 293.0933,

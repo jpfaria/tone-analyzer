@@ -2,16 +2,16 @@
   "aliases": [],
   "artist": "Pearl Jam",
   "roles": {
-    "lead": {
-      "analyzer_version": "0.3.0",
+    "guitars": {
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 340.9502,
-        "file": "lead/reference.wav",
+        "file": "guitars/reference.wav",
         "kind": "separated",
         "sample_rate_hz": 48000,
-        "separator": "demucs",
+        "separator": "demucs htdemucs_6s",
         "sha256": "f548762cfda5a260e2498d9fc214af29d315bcce2ec23e53da25c34cd0b7602b"
       },
       "track": {
