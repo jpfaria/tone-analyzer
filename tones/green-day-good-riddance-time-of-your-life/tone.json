@@ -1,0 +1,29 @@
+{
+  "aliases": [],
+  "artist": "Green Day",
+  "roles": {
+    "guitars": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 153.4667,
+        "file": "guitars/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 48000,
+        "separator": "demucs htdemucs_6s",
+        "sha256": "75f561fc478dfbc8675bc7cf7957670688792c105285afa30dc13409ac14b61e"
+      },
+      "track": {
+        "duration_s": 153.4667,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "596a214186069b3c0ba537fcb96168271e5a60b76f76cc7badea63b15bc797dc"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "green-day-good-riddance-time-of-your-life",
+  "song": "Good Riddance (Time of Your Life)"
+}

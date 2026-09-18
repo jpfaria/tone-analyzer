@@ -3,7 +3,7 @@
   "artist": "Radiohead",
   "roles": {
     "lead": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -14,10 +14,16 @@
         "separator": null,
         "sha256": "a37dd26a5ef993172187cbd22e6131cd62c7ad3c43e52346b126974b988f05e6"
       },
-      "track": null
+      "track": {
+        "duration_s": 238.4049,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "0b6c88885d90af3e075926e02408b49671ae64f2738753bce8234770403e57ef"
+      }
     },
     "rhythm": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -28,7 +34,13 @@
         "separator": null,
         "sha256": "f0ee3d1393369e190acab1b00dcc837aa19f5e1876f2a3483ca4685bc1105376"
       },
-      "track": null
+      "track": {
+        "duration_s": 238.4049,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "0b6c88885d90af3e075926e02408b49671ae64f2738753bce8234770403e57ef"
+      }
     }
   },
   "schema_version": 1,

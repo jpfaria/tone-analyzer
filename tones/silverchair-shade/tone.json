@@ -3,7 +3,7 @@
   "artist": "Silverchair",
   "roles": {
     "lead": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -14,10 +14,16 @@
         "separator": null,
         "sha256": "c219bb85b40c4847e2ac2b733b8a300c79045635b780256d246a8552bd034cca"
       },
-      "track": null
+      "track": {
+        "duration_s": 246.1919,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "43565d945b56394de0c00199b66a5b5bdf7ae7c5d92b6a5f91e09e8015749e74"
+      }
     },
     "rhythm": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -28,7 +34,13 @@
         "separator": null,
         "sha256": "8fe8426d6ae99880fddf38d67cccfb6f854180f20f105efb4d917ecfc2a543ff"
       },
-      "track": null
+      "track": {
+        "duration_s": 246.1919,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "43565d945b56394de0c00199b66a5b5bdf7ae7c5d92b6a5f91e09e8015749e74"
+      }
     }
   },
   "schema_version": 1,

@@ -3,7 +3,7 @@
   "artist": "Silverchair",
   "roles": {
     "rhythm": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -14,7 +14,13 @@
         "separator": null,
         "sha256": "5289dda6739d5c7321677a5c888dfe62b38843fa5317e4d6e9086ab530445c51"
       },
-      "track": null
+      "track": {
+        "duration_s": 322.6513,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "6d8dc00611ec5fb367d3bcb257e2b977dd042787b6c383097a596b57a3afef0a"
+      }
     }
   },
   "schema_version": 1,

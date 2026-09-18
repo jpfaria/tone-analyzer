@@ -1,0 +1,29 @@
+{
+  "aliases": [],
+  "artist": "Green Day",
+  "roles": {
+    "guitars": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 261.2667,
+        "file": "guitars/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 48000,
+        "separator": "demucs htdemucs_6s",
+        "sha256": "4f6b53b2c1b45972ee4377383d61f16369f50a3c40f80b4a8cf098eea2b88350"
+      },
+      "track": {
+        "duration_s": 261.2667,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "0049dc64ae7e58083a31fc8a2af4f1069b88114e8e2a2a0df9ed3e147911cbb0"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "green-day-boulevard-of-broken-dreams",
+  "song": "Boulevard of Broken Dreams"
+}

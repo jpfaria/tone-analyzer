@@ -1,0 +1,29 @@
+{
+  "aliases": [],
+  "artist": "Cazuza",
+  "roles": {
+    "guitars": {
+      "analyzer_version": "0.3.2",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 151.3067,
+        "file": "guitars/reference.wav",
+        "kind": "stem",
+        "sample_rate_hz": 44100,
+        "separator": null,
+        "sha256": "c26412571fc8afb66fcacb6a8d4242727bd6fb1c0f07c632458d4cdd08e7139a"
+      },
+      "track": {
+        "duration_s": 151.3067,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "a0040c74870c4ee9e0905d8809d508a00a333d24fb7fa0bcefcb5ce3f1d18d18"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "cazuza-codinome-beija-flor",
+  "song": "Codinome Beija-Flor"
+}

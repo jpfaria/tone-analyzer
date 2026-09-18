@@ -2,8 +2,8 @@
 """Validate every entry of the tone library.
 
 Per role: stored reference audio matches its sha256, fingerprint is schema >= 4
-with no local path, and — when a track is stored — the track decodes to the
-reference's length, the reference sits inside it at the stored offset
+with no local path, and — when a track is stored — the reference fits inside the
+track at its offset, the reference sits inside it at the stored offset
 (cross-correlation on the reference's loudest minute), and harmonics.json has one
 row per detected note. Roles with fewer than 5 detected notes are listed.
 
@@ -58,8 +58,8 @@ def main(root: str = "tones") -> int:
                 hp = e / role / "harmonics.json"
                 hn = len(json.loads(hp.read_text())["notes"]) if hp.exists() else 0
                 line = f"track lag={lag * 1000:+.1f} ms (stored {off * 1000:+.1f}) r={r:.2f} harmonics={hn}"
-                if abs(tdur - rdur) > 1.0:
-                    problems.append(f"{tag}: track decodes to {tdur:.1f} s, reference {rdur:.1f} s")
+                if rdur + off > tdur + 0.05 or off < -0.5:
+                    problems.append(f"{tag}: reference ({rdur:.1f} s at {off:+.3f} s) does not fit in the track ({tdur:.1f} s)")
                 if abs(lag - off) > 0.005:
                     problems.append(f"{tag}: measured lag {lag * 1000:+.1f} ms, stored offset {off * 1000:+.1f} ms")
                 if hn != notes:

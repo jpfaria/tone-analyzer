@@ -3,7 +3,7 @@
   "artist": "U2",
   "roles": {
     "lead": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -14,10 +14,16 @@
         "separator": null,
         "sha256": "9ae201be6f2a73fb996b69e5319fcc37ac757df73dab69fa3ac84028ddb44157"
       },
-      "track": null
+      "track": {
+        "duration_s": 276.6667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d799249b0199761c412219ac7b15dd4c96a93c6b635132b789414b7a92546427"
+      }
     },
     "rhythm": {
-      "analyzer_version": "0.3.0",
+      "analyzer_version": "0.3.2",
       "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
@@ -28,7 +34,13 @@
         "separator": null,
         "sha256": "d8d67ae6aee0a47705164f951b4f11b5657c58313a9f4aef356f3ceb947187ca"
       },
-      "track": null
+      "track": {
+        "duration_s": 276.6667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d799249b0199761c412219ac7b15dd4c96a93c6b635132b789414b7a92546427"
+      }
     },
     "rhythm-2": {
       "analyzer_version": "0.3.0",
