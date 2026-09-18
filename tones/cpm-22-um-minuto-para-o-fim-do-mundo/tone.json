@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 198.0,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "3f192c610a3731578d614658e12fa81b437f4809fd6a7cc671edecdc6ef06ac5"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.311,
+          "lag_s": 0.0,
+          "matched_file": "02. Um Minuto Para O Fim Do Mundo.mp3"
+        },
+        "duration_s": 198.0,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "3e41bc0f3377cec83e9d1d2c50ed84cc5f8dd820c4bc10d65e80a0edf20f8427"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 198.0,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "b1dfd9cd95a0a6a19be6f0200931c50e6e0823262fb37700a0692a2f662bc146"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.724,
+          "lag_s": 0.0,
+          "matched_file": "02. Um Minuto Para O Fim Do Mundo.mp3"
+        },
+        "duration_s": 198.0,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "3e41bc0f3377cec83e9d1d2c50ed84cc5f8dd820c4bc10d65e80a0edf20f8427"
+      }
     }
   },
   "schema_version": 1,

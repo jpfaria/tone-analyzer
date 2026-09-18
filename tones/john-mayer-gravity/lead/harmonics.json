@@ -1485,7 +1485,7 @@
   ],
   "schema_version": 1,
   "source": {
-    "path": "original.mp3",
+    "path": "track.mp3",
     "sample_rate_hz": 44100
   }
 }

@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 178.0,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "db880861847961333d525ea662c606d4200aba01f0e97d72454f032a29850717"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.207,
+          "lag_s": 0.0,
+          "matched_file": "When I Come Around - Green Day.flac"
+        },
+        "duration_s": 178.0,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "2636150bff4f33e4e356f131ec5705c150aeab384fd12f9b5c8c64ccfa9aea05"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 178.0,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "0e244120744759573f50774431d7adb93c7d659b2c064d4fe7ca8ac4d0fbdb3d"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.62,
+          "lag_s": 0.0,
+          "matched_file": "When I Come Around - Green Day.flac"
+        },
+        "duration_s": 178.0,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "2636150bff4f33e4e356f131ec5705c150aeab384fd12f9b5c8c64ccfa9aea05"
+      }
     }
   },
   "schema_version": 1,

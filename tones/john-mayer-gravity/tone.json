@@ -4,7 +4,7 @@
   "roles": {
     "guitar-demucs": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 245.8906,
@@ -17,13 +17,14 @@
       "track": {
         "duration_s": 245.8267,
         "file": "track.mp3",
+        "offset_s": -0.025,
         "sample_rate_hz": 44100,
         "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
       }
     },
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 245.8267,
@@ -36,13 +37,14 @@
       "track": {
         "duration_s": 245.8267,
         "file": "track.mp3",
+        "offset_s": 0.0,
         "sample_rate_hz": 44100,
         "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
       }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 245.8267,
@@ -55,6 +57,7 @@
       "track": {
         "duration_s": 245.8267,
         "file": "track.mp3",
+        "offset_s": 0.0,
         "sample_rate_hz": 44100,
         "sha256": "baa79093ca947aa54664d01612e81fea0f1b0d72a1c73258371db5a0f96e1168"
       }

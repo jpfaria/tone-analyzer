@@ -5415,7 +5415,7 @@
   "source": {
     "channels": 2,
     "duration_s": 240.0667,
-    "path": "lead.wav",
+    "path": "reference.wav",
     "sample_rate_hz": 44100,
     "sha256": "6acf75eac0759e703879886129e85ee6d93cd470edf9e961b17ab64cc5498590"
   }

@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 242.0,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "be85741a55436be7e8259ac39edb5fceb21649ad2deacde23c2c28335eb0ea42"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.467,
+          "lag_s": 0.0,
+          "matched_file": "08 - Slow Dancing in a Burning Room.mp3"
+        },
+        "duration_s": 242.0,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "9626056ff88244c1cf6bd04ff262b4b3aaa843e8c39619d676ac37a618893d0d"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 242.0,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "3e979016ff226d5343d162bd3c3d46f816b3aad0b045cb5c7a4b42bf7d4dae6d"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.662,
+          "lag_s": 0.0,
+          "matched_file": "08 - Slow Dancing in a Burning Room.mp3"
+        },
+        "duration_s": 242.0,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "9626056ff88244c1cf6bd04ff262b4b3aaa843e8c39619d676ac37a618893d0d"
+      }
     }
   },
   "schema_version": 1,

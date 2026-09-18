@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 212.6,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "84a6f19ca114ea83f50d1ec8d83f6d8df7771c68a679ae3277dcaeb2a128d633"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.202,
+          "lag_s": 0.0,
+          "matched_file": "Lugar Ao Sol - Charlie Brown Jr.flac"
+        },
+        "duration_s": 212.6,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "f94a8590d90d9c66e0cea04991c78875b91aa5ea23e130c830f058b2b8f73186"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 212.6,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "3cbe1f5de345de3604349943f1c9430b8cfaa2126842c7de4e9772a207b6c9fe"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.52,
+          "lag_s": 0.0,
+          "matched_file": "Lugar Ao Sol - Charlie Brown Jr.flac"
+        },
+        "duration_s": 212.6,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "f94a8590d90d9c66e0cea04991c78875b91aa5ea23e130c830f058b2b8f73186"
+      }
     }
   },
   "schema_version": 1,

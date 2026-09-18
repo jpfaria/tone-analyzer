@@ -4,7 +4,7 @@
   "roles": {
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 181.5333,
@@ -14,7 +14,18 @@
         "separator": null,
         "sha256": "4a4970537d91baeb88aced61daf7ec92c468aba5fbddba5a430ceeb1aefeee75"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.597,
+          "lag_s": 0.0,
+          "matched_file": "Basket Case - Green Day.flac"
+        },
+        "duration_s": 181.5333,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "5c9cc2bf054bfdd7e935fe32b9335f79a6b9190329000e4a76568bdf87da2fb0"
+      }
     }
   },
   "schema_version": 1,

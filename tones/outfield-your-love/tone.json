@@ -4,7 +4,7 @@
   "roles": {
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 221.8841,
@@ -14,7 +14,18 @@
         "separator": null,
         "sha256": "1ac842d5ab5c930c1dc7fa401d1122e1e8e0103a157318c222c21346c52bb4a7"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.462,
+          "lag_s": 0.0,
+          "matched_file": "THE OUTFIELD - Your love.mp3"
+        },
+        "duration_s": 222.8453,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "fcfd4e07fea10caab4c4f4ca9407f9f6452e7a56e2e5dd52b591155060971b68"
+      }
     }
   },
   "schema_version": 1,

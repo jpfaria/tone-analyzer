@@ -3953,7 +3953,7 @@
   "source": {
     "channels": 2,
     "duration_s": 245.8906,
-    "path": "guitar-demucs.wav",
+    "path": "reference.wav",
     "sample_rate_hz": 44100,
     "sha256": "9570ecc6131060899ab9d13f5d12ca4d079b572cd0a616c580bfd1e8d10c4dfd"
   }

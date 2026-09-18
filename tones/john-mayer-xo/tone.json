@@ -4,7 +4,7 @@
   "roles": {
     "acoustic": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 213.6267,
@@ -14,7 +14,18 @@
         "separator": null,
         "sha256": "c0098fc9a07770571366cf2bb01641501e883628316a4d4063388566862dcda7"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.637,
+          "lag_s": 0.0,
+          "matched_file": "01 - XO.mp3"
+        },
+        "duration_s": 213.6267,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "185c1661c489bee3e468f30e51cd0de7d62508021f783194df2fb20ead9e560a"
+      }
     }
   },
   "schema_version": 1,

@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 258.4,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "76cc5d59b5e5ed4b0e25faa1d9bc9c533943253081d49326d80e4ef3389269b9"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.424,
+          "lag_s": 0.0,
+          "matched_file": "05 - Beat It.flac"
+        },
+        "duration_s": 258.4,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "836f081f68fc7c681d390ccb764a18f1b3df8a387e5a5fcacd70cfd4f6c3bc28"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 258.4,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "c65605bf9e13d2837b0d3fa6cd3a5901c4bc64f49e09a5e3fc84b05da4169400"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.432,
+          "lag_s": 0.0,
+          "matched_file": "05 - Beat It.flac"
+        },
+        "duration_s": 258.4,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "836f081f68fc7c681d390ccb764a18f1b3df8a387e5a5fcacd70cfd4f6c3bc28"
+      }
     }
   },
   "schema_version": 1,

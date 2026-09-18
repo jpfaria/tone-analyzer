@@ -1,0 +1,31 @@
+{
+  "aliases": [
+    "Julliany Souza Quem é esse"
+  ],
+  "artist": "Samuel Lima",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 461.3573,
+        "file": "lead/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 48000,
+        "separator": "demucs",
+        "sha256": "7c3e7c63bcf35d8ba808d4b23ed1d3ae9a58bb68ba2d6aa03a54b936317a6d2b"
+      },
+      "track": {
+        "duration_s": 461.3573,
+        "file": "track.wav",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "0fee0f0f93cb5af25c2b7705ec7dbdcc4c327c0e04ad95d3ea01ae20d78d570d"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "samuel-lima-quem-e-esse",
+  "song": "Quem é esse?"
+}

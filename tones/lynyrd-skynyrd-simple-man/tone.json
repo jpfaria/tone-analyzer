@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 359.1867,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "c5961f55b48d66d58e244ecdb43984152dbb835c9a55423c5691b0c69b9fa317"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.568,
+          "lag_s": 0.0,
+          "matched_file": "Simple Man - Lynyrd Skynyrd.flac"
+        },
+        "duration_s": 359.1867,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "192d20b209bcb094c29a87d283cdca050f76a74a6b408503fe01e1bc95cbb41a"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 359.1867,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "be0c1b29fcf88c4bbab1d262a4089f1f2fa72c6f952dddaab56f7866bb3e021a"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.598,
+          "lag_s": 0.0,
+          "matched_file": "Simple Man - Lynyrd Skynyrd.flac"
+        },
+        "duration_s": 359.1867,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "192d20b209bcb094c29a87d283cdca050f76a74a6b408503fe01e1bc95cbb41a"
+      }
     }
   },
   "schema_version": 1,

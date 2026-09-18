@@ -1,0 +1,29 @@
+{
+  "aliases": [],
+  "artist": "Pearl Jam",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 340.9502,
+        "file": "lead/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 48000,
+        "separator": "demucs",
+        "sha256": "f548762cfda5a260e2498d9fc214af29d315bcce2ec23e53da25c34cd0b7602b"
+      },
+      "track": {
+        "duration_s": 340.9073,
+        "file": "track.mp3",
+        "offset_s": -0.025,
+        "sample_rate_hz": 44100,
+        "sha256": "f49ee9637fe6a2fb61bce2a5a4bb827daa229e4d989cb0d09b5f931173200d0e"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "pearl-jam-alive",
+  "song": "Alive"
+}

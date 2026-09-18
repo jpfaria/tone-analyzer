@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 298.8,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "b6aba678ae91f3b8ebc65e85ff9406429015a0bd2e19583f426a3c4add0453eb"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.275,
+          "lag_s": 0.0,
+          "matched_file": "04 Pure Massacre.mp3"
+        },
+        "duration_s": 298.8,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "738361bf2a072b674506627e1981f5e53373bf2a9942fc4ccf69975ae6775113"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 298.8,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "6d09b979321c9f2b79e903598144a28337434a88405dbc3c2939580534aa480e"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.619,
+          "lag_s": 0.0,
+          "matched_file": "04 Pure Massacre.mp3"
+        },
+        "duration_s": 298.8,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "738361bf2a072b674506627e1981f5e53373bf2a9942fc4ccf69975ae6775113"
+      }
     }
   },
   "schema_version": 1,

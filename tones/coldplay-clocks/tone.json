@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 252.4667,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "40ce7d4fb33160b11643361ef0c142182c1d3077d12139574d2e6caf5cc8a169"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.449,
+          "lag_s": 0.0,
+          "matched_file": "01. Clocks (Edit).mp3"
+        },
+        "duration_s": 252.4667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "57121529f45421f160ab7a4d2da188837ee4cb6e01123f4a14e66fb12eafbb11"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 252.4667,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "5ae5a06facc02754107d42a349ff5bfd5ee8c238579a7fab56c68af49b7883e8"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.525,
+          "lag_s": 0.0,
+          "matched_file": "01. Clocks (Edit).mp3"
+        },
+        "duration_s": 252.4667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "57121529f45421f160ab7a4d2da188837ee4cb6e01123f4a14e66fb12eafbb11"
+      }
     }
   },
   "schema_version": 1,

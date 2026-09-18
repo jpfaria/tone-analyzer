@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 250.6667,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "f466cd99a6bcdc8d42fb616c9f489b644d78cfdf487b2868fa7e04992d4a6b15"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.27,
+          "lag_s": 0.0,
+          "matched_file": "11 Everlong.mp3"
+        },
+        "duration_s": 250.6667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "ff1bfb230a01bf073bebb7524f60060d1c4b00b8bd01e14af509947761b64dc4"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 250.6667,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "08a4961c5db749d3072df8798e250d3290b26e832cb30536a560f6f6e6a3f352"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.642,
+          "lag_s": 0.0,
+          "matched_file": "11 Everlong.mp3"
+        },
+        "duration_s": 250.6667,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "ff1bfb230a01bf073bebb7524f60060d1c4b00b8bd01e14af509947761b64dc4"
+      }
     }
   },
   "schema_version": 1,

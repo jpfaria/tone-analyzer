@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 226.1067,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "76512e1fedc713d1a1d36bf19762de547ca526799cdebd262faedbb41170df33"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.312,
+          "lag_s": 0.0,
+          "matched_file": "Freak - Silverchair.flac"
+        },
+        "duration_s": 226.1067,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d3827f94d51637b9148c4c2e18e40ad5750c157e490bcd7b20cbb643d8b087c0"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 226.1067,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "44a23f01ca38ca8848071bd63398d7601b902dfa6c9732a11e34d8dce799a84e"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.555,
+          "lag_s": 0.0,
+          "matched_file": "Freak - Silverchair.flac"
+        },
+        "duration_s": 226.1067,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d3827f94d51637b9148c4c2e18e40ad5750c157e490bcd7b20cbb643d8b087c0"
+      }
     }
   },
   "schema_version": 1,

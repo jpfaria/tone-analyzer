@@ -3895,7 +3895,7 @@
   "source": {
     "channels": 2,
     "duration_s": 222.04,
-    "path": "rhythm.wav",
+    "path": "reference.wav",
     "sample_rate_hz": 44100,
     "sha256": "28f9aff606d6f8a658b715c319a13cadb7621d25be41e681423da8092add8a96"
   }

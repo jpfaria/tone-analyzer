@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 269.72,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "a5064cf63bdb4b55303400a8f4148862a31e4e07e53bc960d851da7b65310765"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.345,
+          "lag_s": 0.0,
+          "matched_file": "01 - Heartbreak Warfare.mp3"
+        },
+        "duration_s": 269.72,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "772636b1b814275742c5a11c78add492c312c92bd03b68c164267112018668d5"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 269.72,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "21c1f2c173cb82c39ef7e2605f7e13de5e13594a903e18db805f1dba5a490a9e"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.527,
+          "lag_s": 0.0,
+          "matched_file": "01 - Heartbreak Warfare.mp3"
+        },
+        "duration_s": 269.72,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "772636b1b814275742c5a11c78add492c312c92bd03b68c164267112018668d5"
+      }
     }
   },
   "schema_version": 1,

@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 301.1333,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "db56407bdac37b4c5d3f58a1031e33708460be6093eb63c9ed1b1df46934db30"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.379,
+          "lag_s": 0.0,
+          "matched_file": "Smells Like Teen Spirit - Nirvana.flac"
+        },
+        "duration_s": 301.1333,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 96000,
+        "sha256": "ba66495b4a70b1387b69a8bbcc39ac3621d33fddb8ed8696ec695ef3baf98e9d"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 301.1333,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "16830c8231541b7c35413a4809944c46198cb6636cd65f4f7b7ab809f5e86c59"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.542,
+          "lag_s": 0.0,
+          "matched_file": "Smells Like Teen Spirit - Nirvana.flac"
+        },
+        "duration_s": 301.1333,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 96000,
+        "sha256": "ba66495b4a70b1387b69a8bbcc39ac3621d33fddb8ed8696ec695ef3baf98e9d"
+      }
     }
   },
   "schema_version": 1,

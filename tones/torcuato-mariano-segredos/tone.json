@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 387.0051,
@@ -14,7 +14,18 @@
         "separator": null,
         "sha256": "5f8205436209c6cc478b73fb3e056d9e8e5d194823d76c124000da17a2d27cc5"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.654,
+          "lag_s": 0.0,
+          "matched_file": "06 - segredos.mp3"
+        },
+        "duration_s": 387.0051,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "15c326201055b0efb9754d7334702719194047b8f8265bc060b32502a02e4dcb"
+      }
     }
   },
   "schema_version": 1,

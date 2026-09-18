@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 222.04,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "6a2f176bc5a2296170173089f5d1104ff8d5eee02ba15038ff0ec618618f54ab"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.125,
+          "lag_s": 0.0,
+          "matched_file": "Na Sua Estante - Pitty.flac"
+        },
+        "duration_s": 222.04,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "e4b222e22f85aca1371820e8766c0478a3ad9cb98a793ce544fe7f66ec8d2a8b"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 222.04,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "28f9aff606d6f8a658b715c319a13cadb7621d25be41e681423da8092add8a96"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.426,
+          "lag_s": 0.0,
+          "matched_file": "Na Sua Estante - Pitty.flac"
+        },
+        "duration_s": 222.04,
+        "file": "track.flac",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "e4b222e22f85aca1371820e8766c0478a3ad9cb98a793ce544fe7f66ec8d2a8b"
+      }
     }
   },
   "schema_version": 1,

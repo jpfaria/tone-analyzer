@@ -1,0 +1,29 @@
+{
+  "aliases": [],
+  "artist": "Pearl Jam",
+  "roles": {
+    "lead": {
+      "analyzer_version": "0.3.0",
+      "created": "2026-09-18",
+      "fingerprint_schema": 4,
+      "reference": {
+        "duration_s": 293.0933,
+        "file": "lead/reference.wav",
+        "kind": "separated",
+        "sample_rate_hz": 48000,
+        "separator": "demucs htdemucs_6s",
+        "sha256": "7cc87d9487c90008b6e89e7339cab34661a64205b68f214f10c7f9e29f922506"
+      },
+      "track": {
+        "duration_s": 293.0933,
+        "file": "track.wav",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "c414f70d9fb913783bcb69158990f4b19fb0b86c9d028fce5036aa777d279150"
+      }
+    }
+  },
+  "schema_version": 1,
+  "slug": "pearl-jam-even-flow",
+  "song": "Even Flow"
+}

@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 331.56,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "7bed48d4f770615597357b4aab565ac5fc8d9832a464fe8e4e0d9b95ae29c4a5"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.488,
+          "lag_s": 0.0,
+          "matched_file": "01 Enter Sandman.mp3"
+        },
+        "duration_s": 331.56,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "fb1539ec0bddeabeba3866eb835be6b0ca29bd04732b9337b67f0659c918278c"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 331.56,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "afa5dc57e52a45d414d9f3b04334ba439363f7e0cf0518c22d9911b06942c86a"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.593,
+          "lag_s": 0.0,
+          "matched_file": "01 Enter Sandman.mp3"
+        },
+        "duration_s": 331.56,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 48000,
+        "sha256": "fb1539ec0bddeabeba3866eb835be6b0ca29bd04732b9337b67f0659c918278c"
+      }
     }
   },
   "schema_version": 1,

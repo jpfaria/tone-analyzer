@@ -4,7 +4,7 @@
   "roles": {
     "lead": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 286.88,
@@ -14,11 +14,22 @@
         "separator": null,
         "sha256": "07b6ff026d2781da6c42d4b6f77edfe8316a11aff18521cf8d66f8ee2897944a"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.391,
+          "lag_s": 0.0,
+          "matched_file": "Chris Isaak - Wicked Game.mp3"
+        },
+        "duration_s": 286.88,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d8744a9987bc8db7df0990d3081a1ebbad84b171affdd7fb358038477d17fe27"
+      }
     },
     "rhythm": {
       "analyzer_version": "0.3.0",
-      "created": "2026-09-17",
+      "created": "2026-09-18",
       "fingerprint_schema": 4,
       "reference": {
         "duration_s": 286.88,
@@ -28,7 +39,18 @@
         "separator": null,
         "sha256": "19242ff36c271b65bcefbbed115bebe64d70115a1f73d4988fca30a392415d59"
       },
-      "track": null
+      "track": {
+        "alignment": {
+          "correlation": 0.508,
+          "lag_s": 0.0,
+          "matched_file": "Chris Isaak - Wicked Game.mp3"
+        },
+        "duration_s": 286.88,
+        "file": "track.mp3",
+        "offset_s": 0.0,
+        "sample_rate_hz": 44100,
+        "sha256": "d8744a9987bc8db7df0990d3081a1ebbad84b171affdd7fb358038477d17fe27"
+      }
     }
   },
   "schema_version": 1,

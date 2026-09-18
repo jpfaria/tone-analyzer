@@ -3893,7 +3893,7 @@
   "source": {
     "channels": 2,
     "duration_s": 276.6667,
-    "path": "lead.wav",
+    "path": "reference.wav",
     "sample_rate_hz": 44100,
     "sha256": "9ae201be6f2a73fb996b69e5319fcc37ac757df73dab69fa3ac84028ddb44157"
   }
