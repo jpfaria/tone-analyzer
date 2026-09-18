@@ -9,12 +9,13 @@ from __future__ import annotations
 
 import sys
 
-from tone_analyzer import analyze, compare, eq_match, harmonics, make_correction_ir, separate, take, tones
+from tone_analyzer import analyze, compare, delay, eq_match, harmonics, make_correction_ir, separate, take, tones
 
 _COMMANDS = {
     "analyze": analyze.main,
     "harmonics": harmonics.main,
     "take": take.main,
+    "delay": delay.main,
     "separate": separate.main,
     "tones": tones.main,
     "compare": compare.main,
@@ -27,6 +28,7 @@ USAGE = """usage: tone-analyzer <command> [args...]
 commands:
   analyze        <in.wav> [--out-dir DIR]                     fingerprint.json + spectrograms + analysis.pdf
   harmonics      <in.wav> (--auto | --at SEC --midi M ...) [--out-dir DIR]  harmonics.json
+  delay          <in.wav> [--out-dir DIR]                     delay.json: echo lags by persistence and spread across windows
   take           <in.wav> [--out-dir DIR]                     take.json: pitch, duration, saturation, noise floor
   separate       <track> [--out-dir DIR]                      guitar.wav + no_guitar.wav at 48 kHz (needs demucs)
   tones          find <song> | list | add ... | reanalyze <song>|--all   library of stored song analyses
