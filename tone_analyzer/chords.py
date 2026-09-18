@@ -48,12 +48,20 @@ def levels_at(signal: np.ndarray, sr: int, start_s: float, freqs_hz: list[float]
 
 
 DETECTORS = ("salience", "basic-pitch")
-SAL_PROM_DB = 13.0        # the method's prominence gate
-SAL_HARM = 8              # harmonics that vote for a candidate
-EXPLAIN_HARM = 16         # harmonics a chosen note takes away from the others
-MIN_FREE = 3              # a candidate needs this many prominent, unexplained harmonics
+SAL_PROM_DB = 13.0        # the method's prominence gate (validated on single notes)
+SAL_HARM = 8              # harmonics read per candidate; guitar DI partials above h8 are weak and,
+                          # above ~2 kHz, fall inside the COLLIDE comb of any low note anyway
+MIN_FREE = 2              # the own fundamental plus one more free harmonic. Measured: a major 10th
+                          # over root+fifth (G#3 in open E, C#4 in open A, F#4 in open D, A3 in
+                          # barre F, D#4 in barre B) keeps only h1 and h5 free, the rest sit within
+                          # COLLIDE of the lower notes' partials; 3 would drop the chord's third
+FUND_FLOOR_DB = 30.0      # a fundamental this far below the strongest reading is floor, not a note.
+                          # Measured on the test voicings (2 spectrum shapes): real fundamentals sit
+                          # at -7.8 dB or higher; floor bumps that still pass the 13 dB prominence
+                          # gate (a synthetic floor is very flat) sit at -47.9 dB or lower
 MAX_NOTES = 6             # six strings
-COLLIDE = 0.024           # two frequencies closer than this are the same peak
+COLLIDE = 0.024           # two frequencies closer than this are the same peak: 2 x PEAK_TOL, since
+                          # levels_at reads the maximum within +-PEAK_TOL of each frequency
 MIDI_RANGE = range(40, 89)   # E2..E6
 
 
@@ -61,48 +69,55 @@ def _hz(midi: int) -> float:
     return 440.0 * 2.0 ** ((midi - 69) / 12.0)
 
 
-def salience_set(signal: np.ndarray, sr: int, start_s: float, dur_s: float = 0.6) -> list[int]:
-    """Greedy: the candidate with the most prominence on unexplained harmonics wins, its
-    harmonics become explained, repeat.
+def _explained(f: float, chosen_hz: list[float]) -> bool:
+    """f lies on the harmonic comb (any k >= 1, no upper limit) of a note already chosen."""
+    for f0 in chosen_hz:
+        k = max(1, round(f / f0))
+        if abs(f - k * f0) / f < COLLIDE:
+            return True
+    return False
 
-    An exact octave doubling (+12/+24/+36 semitones) of an already-chosen note is a note
-    whose ENTIRE spectrum is a subset of the chosen note's (k * f0_upper = 2k * f0_lower for
-    every k), so once one side of the pair is explained there is nothing left to distinguish
-    the other from silence -- this method has no way to tell "only the lower note" from
-    "both the lower note and its octave" apart from magnitude spectrum alone. In practice this
-    means: when a bigger chord's OTHER notes also collide with a doubled note's odd harmonics
-    (measured, not assumed -- see tests/task-2 report), only one member of the pair survives
-    MIN_FREE and gets reported; which one survives is whichever the greedy order explains
-    first, not necessarily the lower note. The DI choice (tone-builder) decides whether the
-    doubling is actually there. This reduction is NOT guaranteed to trigger for every doubled
-    pair in isolation (see task-2 report: a 2-note octave-only input can still report both
-    notes, plus spurious neighbours, when no other note's collisions help empty out the
-    doubled note's free harmonics) -- it is an emergent side effect of MIN_FREE against
-    whatever else is in the mix, not a dedicated octave filter.
+
+def salience_set(signal: np.ndarray, sr: int, start_s: float, dur_s: float = 0.6) -> list[int]:
+    """The octave-reduced set of notes sounding at start_s: the lowest note of each octave class.
+
+    Candidates are walked from low to high. A candidate is a note when its own fundamental is
+    prominent, within FUND_FLOOR_DB of the strongest reading, and not on the harmonic comb of a lower note already chosen, and it has at least
+    MIN_FREE prominent harmonics off those combs. Walking upwards makes the argument inductive:
+    every partial below a candidate's fundamental belongs to a lower note, and every lower note is
+    either chosen or an octave copy of one chosen (its partials are even harmonics of that one),
+    so a prominent, unexplained fundamental can only be a note of its own. Subharmonics never pass
+    (their fundamental has no energy) and octave copies never pass (their fundamental is h2, h4 or
+    h8 of the lower note). The comb has no upper limit so a doubling two or three octaves up is
+    covered even above the lower note's last audible partial.
+
+    Exact octave doublings are indistinguishable from the lower note alone by harmonic content,
+    hence the octave reduction; the caller enumerates doublings. The same holds for a note whose
+    fundamental falls within COLLIDE of a lower note's harmonic without being an octave (a twelfth,
+    19 semitones, is 0.1 % off 3 x f0): it is not reported unless another note of its octave class
+    lower down is.
     """
-    peaks: dict[int, list[tuple[float, float]]] = {}
-    for m in MIDI_RANGE:
-        f0 = _hz(m)
-        h = levels_at(signal, sr, start_s, [f0 * k for k in range(1, SAL_HARM + 1)], dur_s)
-        if h is None:
-            return []
-        peaks[m] = [(f0 * k, p) for k, p in enumerate(h["prominence_db"], 1)
-                    if p is not None and p >= SAL_PROM_DB]
-    explained: list[float] = []
+    cands = list(MIDI_RANGE)
+    freqs = [_hz(m) * k for m in cands for k in range(1, SAL_HARM + 1)]
+    h = levels_at(signal, sr, start_s, freqs, dur_s)
+    if h is None:
+        return []
+    prom = h["prominence_db"]
+    top = max(lv for lv in h["level_db"] if lv is not None)
     chosen: list[int] = []
-    while len(chosen) < MAX_NOTES:
-        best, best_s = None, 0.0
-        for m, pk in peaks.items():
-            if m in chosen:
-                continue
-            free = [p for f, p in pk if not any(abs(f - e) / e < COLLIDE for e in explained)]
-            if len(free) >= MIN_FREE and sum(free) > best_s:
-                best, best_s = m, sum(free)
-        if best is None:
+    chosen_hz: list[float] = []
+    for i, m in enumerate(cands):
+        if len(chosen) >= MAX_NOTES:
             break
-        chosen.append(best)
-        explained += [_hz(best) * k for k in range(1, EXPLAIN_HARM + 1)]
-    return sorted(chosen)
+        harm = [(freqs[i * SAL_HARM + j], prom[i * SAL_HARM + j]) for j in range(SAL_HARM)]
+        free = [f for f, p in harm
+                if p is not None and p >= SAL_PROM_DB and not _explained(f, chosen_hz)]
+        fund_db = h["level_db"][i * SAL_HARM]
+        if (free and free[0] == harm[0][0] and len(free) >= MIN_FREE
+                and fund_db is not None and fund_db >= top - FUND_FLOOR_DB):
+            chosen.append(m)
+            chosen_hz.append(_hz(m))
+    return chosen
 
 
 def detect_chords(signal: np.ndarray, sr: int, dur_s: float = 0.6, detector: str = "salience") -> list[dict]:
