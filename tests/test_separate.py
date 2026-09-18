@@ -24,6 +24,7 @@ if {fail}:
 out = pathlib.Path(args[args.index("-o") + 1]); model = args[args.index("-n") + 1]
 assert "--two-stems" in args and args[args.index("--two-stems") + 1] == "guitar"
 track = pathlib.Path(args[-1])
+pathlib.Path(out, "input-seen.txt").write_text(f"{{track.suffix}} {{sf.info(str(track)).frames}}")
 d = out / model / track.stem
 d.mkdir(parents=True)
 t = np.arange(44100) / 44100.0
@@ -96,3 +97,29 @@ def test_separate_runs_demucs_on_the_cpu(tmp_path, monkeypatch):
     assert separate.main([str(_track(tmp_path)), "--out-dir", str(tmp_path / "out")]) == 0
     args = seen.read_text().splitlines()
     assert args[args.index("-d") + 1] == "cpu"
+
+
+def test_separate_feeds_demucs_a_wav_decoded_like_the_analyzer(tmp_path, monkeypatch):
+    """demucs decodes mp3 its own way (−25 ms vs soundfile on Gravity/Alive); give it our decode."""
+    import shutil
+    _install_fake(tmp_path, monkeypatch)
+    seen = {}
+    real_rmtree = shutil.rmtree
+    import tone_analyzer.separate as sep
+
+    class KeepTmp:
+        def __init__(self, prefix=None):
+            self.name = str(tmp_path / "demucs-tmp")
+            Path(self.name).mkdir()
+        def __enter__(self):
+            return self.name
+        def __exit__(self, *exc):
+            seen["input"] = (Path(self.name) / "input-seen.txt").read_text()
+
+    monkeypatch.setattr(sep.tempfile, "TemporaryDirectory", KeepTmp)
+    flac = tmp_path / "song.flac"
+    sf.write(flac, np.zeros((44100, 2), dtype="float32"), 44100, format="FLAC")
+    assert separate.main([str(flac), "--out-dir", str(tmp_path / "out")]) == 0
+    suffix, frames = seen["input"].split()
+    assert suffix == ".wav"
+    assert int(frames) == sf.info(str(flac)).frames

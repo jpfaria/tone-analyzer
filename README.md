@@ -61,6 +61,12 @@ tone-analyzer tones add --artist Radiohead --song Creep --role lead --analysis O
 tone-analyzer tones reanalyze --all        # after an analyzer change, from the stored audio
 ```
 
+When a stem and its track do not start at the same instant (an mp3 decoder delay is
+typically 25 ms), store the difference with `tones add --track-offset SECONDS`; harmonics
+are read at attack + offset. `scripts/validate_library.py` re-checks every entry: audio
+hashes, schema, track length, measured alignment against the stored offset, one harmonics
+row per note.
+
 Audio in `tones/` is stored with Git LFS (`git lfs install` before cloning).
 Separated stems locate notes; harmonic levels are read on the full track, because
 separation erases harmonics above ~H6.

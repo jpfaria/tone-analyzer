@@ -187,6 +187,7 @@ def add(
     separator: str | None = None,
     aliases: list[str] | None = None,
     replace: bool = False,
+    track_offset_s: float = 0.0,
 ) -> Path:
     root, analysis_dir = Path(root).expanduser(), Path(analysis_dir)
     if reference_kind not in KINDS:
@@ -235,7 +236,7 @@ def add(
     track_file = _store_audio(track, entry, TRACK_STEM) if track is not None else None
     old_track = meta["roles"].get(role, {}).get("track")
     if track_file is not None:
-        track_facts = {"file": track_file.name, **_audio_facts(track_file)}
+        track_facts = {"file": track_file.name, "offset_s": track_offset_s, **_audio_facts(track_file)}
     else:
         track_facts = old_track if old_track and _stored(entry, TRACK_STEM) else None
 
@@ -250,8 +251,12 @@ def add(
     return entry
 
 
-def analyze_audio(reference: Path, out_dir: Path, track: Path | None = None) -> Path:
-    """analyze the reference; with a track, read the harmonics of its notes on the track."""
+def analyze_audio(reference: Path, out_dir: Path, track: Path | None = None, track_offset_s: float = 0.0) -> Path:
+    """analyze the reference; with a track, read the harmonics of its notes on the track.
+
+    `track_offset_s` = track time − reference time for the same instant (e.g. an mp3
+    decoder delay); each note is read on the track at its reference attack + offset.
+    """
     import contextlib
     import io
 
@@ -264,7 +269,9 @@ def analyze_audio(reference: Path, out_dir: Path, track: Path | None = None) -> 
             fp = json.loads((out_dir / "fingerprint.json").read_text(encoding="utf-8"))
             args = [str(track), "--out-dir", str(out_dir)]
             for n in fp.get("notes", []):
-                args += ["--at", str(n["start_s"]), "--midi", str(n["midi"])]
+                at = round(n["start_s"] + track_offset_s, 6)
+                if at >= 0:
+                    args += ["--at", str(at), "--midi", str(n["midi"])]
             if len(args) > 3 and harmonics.main(args) != 0:
                 raise LibraryError(f"harmonics failed on {track}")
     return out_dir
@@ -285,7 +292,7 @@ def reanalyze(entry: Path, roles: list[str] | None = None) -> list[str]:
             continue
         track = _stored(entry, TRACK_STEM) if info.get("track") else None
         with tempfile.TemporaryDirectory(prefix="tone-analyzer-reanalyze-") as tmp:
-            analyze_audio(ref, Path(tmp), track)
+            analyze_audio(ref, Path(tmp), track, (info.get("track") or {}).get("offset_s", 0.0))
             add(entry.parent, meta["artist"], meta["song"], role, Path(tmp), info["reference"]["kind"],
                 track=None, separator=info["reference"].get("separator"), replace=True)
         done.append(role)
@@ -323,6 +330,8 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--reference-kind", required=True, choices=KINDS)
     a.add_argument("--reference", default=None, help="the analyzed audio; stored as <role>/reference.<ext>")
     a.add_argument("--track", default=None, help="the full track harmonics were read on; stored as track.<ext>")
+    a.add_argument("--track-offset", type=float, default=0.0,
+                   help="track time minus reference time for the same instant, seconds")
     a.add_argument("--separator", default=None, help="e.g. 'demucs 4.1.0 htdemucs_6s'")
     a.add_argument("--alias", action="append", default=[])
     a.add_argument("--root", default=None, help="library root (default ~/.tone-analyzer/tones)")
@@ -364,6 +373,7 @@ def main(argv: list[str] | None = None) -> int:
             reference=Path(args.reference) if args.reference else None,
             track=Path(args.track) if args.track else None,
             separator=args.separator, aliases=args.alias, replace=args.replace,
+            track_offset_s=args.track_offset,
         )
     except LibraryError as exc:
         print(f"tones: {exc}", file=sys.stderr)

@@ -62,8 +62,15 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     with tempfile.TemporaryDirectory(prefix="tone-analyzer-demucs-") as tmp:
+        # Decode here, not in demucs: its mp3 decoder drops the encoder delay that
+        # soundfile keeps (measured −25 ms on Gravity and Alive), so the stems would
+        # not line up with the track that `harmonics` reads.
+        decoded = Path(tmp) / "input" / f"{track.stem}.wav"
+        decoded.parent.mkdir()
+        x, sr = sf.read(str(track), dtype="float32", always_2d=True)
+        sf.write(str(decoded), x, sr, subtype="FLOAT")
         proc = subprocess.run(
-            [demucs, "-d", "cpu", "--two-stems", "guitar", "-n", a.model, "-o", tmp, str(track)],
+            [demucs, "-d", "cpu", "--two-stems", "guitar", "-n", a.model, "-o", tmp, str(decoded)],
             capture_output=True, text=True,
         )
         stem_dir = Path(tmp) / a.model / track.stem

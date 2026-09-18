@@ -227,3 +227,43 @@ def test_reanalyze_rebuilds_analysis_from_stored_audio(tmp_path):
 def test_reanalyze_skips_role_without_stored_audio(tmp_path):
     entry = tones.add(tmp_path / "lib", "A", "B", "lead", _analysis_dir(tmp_path), "stem")
     assert tones.reanalyze(entry) == []
+
+
+def test_analyze_audio_reads_track_at_stem_time_plus_offset(tmp_path):
+    import numpy as np
+    import soundfile as sf
+
+    from tests._synth import note_sequence
+
+    x, starts = note_sequence([45, 57], 48000, 1.0, 0.5, [0.0, -6.0, -12.0])
+    stem = tmp_path / "stem.wav"
+    sf.write(stem, x, 48000, subtype="FLOAT")
+    shift = 0.3  # the track has the same notes 0.3 s later
+    track = tmp_path / "track.wav"
+    sf.write(track, np.concatenate([np.zeros(int(shift * 48000), dtype=np.float32), x]), 48000, subtype="FLOAT")
+
+    out = tones.analyze_audio(stem, tmp_path / "a", track, track_offset_s=shift)
+    harm = json.loads((out / "harmonics.json").read_text())
+    fp = json.loads((out / "fingerprint.json").read_text())
+    assert [round(n["start_s"] - f["start_s"], 3) for n, f in zip(harm["notes"], fp["notes"])] == [shift, shift]
+    assert harm["notes"][0]["relative_db"][1] == pytest.approx(-6.0, abs=1.0)
+
+
+def test_reanalyze_uses_stored_alignment_offset(tmp_path):
+    import numpy as np
+    import soundfile as sf
+
+    from tests._synth import note_sequence
+
+    x, _ = note_sequence([45], 48000, 1.0, 0.5, [0.0, -6.0])
+    stem, track = tmp_path / "stem.wav", tmp_path / "mix.wav"
+    sf.write(stem, x, 48000, subtype="FLOAT")
+    sf.write(track, np.concatenate([np.zeros(int(0.2 * 48000), dtype=np.float32), x]), 48000, subtype="FLOAT")
+    entry = tones.add(tmp_path / "lib", "A", "B", "lead", _analysis_dir(tmp_path), "stem",
+                      reference=stem, track=track, track_offset_s=0.2)
+    tones.reanalyze(entry)
+    meta = json.loads((entry / "tone.json").read_text())
+    assert meta["roles"]["lead"]["track"]["offset_s"] == 0.2
+    fp = json.loads((entry / "lead" / "fingerprint.json").read_text())
+    harm = json.loads((entry / "lead" / "harmonics.json").read_text())
+    assert harm["notes"][0]["start_s"] == pytest.approx(fp["notes"][0]["start_s"] + 0.2, abs=1e-6)
