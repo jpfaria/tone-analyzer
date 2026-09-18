@@ -193,3 +193,29 @@ def _basic_pitch_picker(x: np.ndarray, sr: int, run=None):
         on = {m for s, e, m in events if min(e, end) - max(s, start_s) >= BP_ACTIVE * dur_s}
         return sorted(m for m in on if m in MIDI_RANGE)
     return pick
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+    import json
+    from pathlib import Path
+
+    p = argparse.ArgumentParser(prog="tone-analyzer chords")
+    p.add_argument("audio")
+    p.add_argument("--detector", default="salience", choices=DETECTORS)
+    p.add_argument("--out")
+    a = p.parse_args(argv)
+    x, sr = sf.read(a.audio, always_2d=False)
+    if x.ndim > 1:
+        x = x.mean(axis=1)
+    try:
+        found = detect_chords(x, sr, detector=a.detector)
+    except ValueError as e:
+        print(f"chords: {e}", file=__import__("sys").stderr)
+        return 2
+    text = json.dumps({"detector": a.detector, "chords": found}, indent=1)
+    if a.out:
+        Path(a.out).write_text(text)
+    else:
+        print(text)
+    return 0

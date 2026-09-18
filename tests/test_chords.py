@@ -152,3 +152,17 @@ def test_basic_pitch_real_cli_finds_power_chord_notes():
     x = np.concatenate([_chord([40, 47, 56]), np.zeros(SR, np.float32)])
     found = chords.detect_chords(x, SR, detector="basic-pitch")
     assert found and {40, 47, 56}.issubset(set(found[0]["midis"]))
+
+
+def test_cli_chords_writes_json(tmp_path, capsys):
+    import json
+
+    import soundfile as sf
+
+    from tone_analyzer import cli
+    wav = tmp_path / "c.wav"
+    sf.write(str(wav), _chord([40, 47, 56]), SR, subtype="FLOAT")
+    assert cli.main(["chords", str(wav)]) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out["detector"] == "salience"
+    assert out["chords"][0]["midis"] == [40, 47, 56]

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import sys
 
-from tone_analyzer import analyze, compare, delay, eq_match, harmonics, make_correction_ir, separate, take, tones
+from tone_analyzer import analyze, chords, compare, delay, eq_match, harmonics, make_correction_ir, separate, take, tones
 
 _COMMANDS = {
     "analyze": analyze.main,
@@ -18,6 +18,7 @@ _COMMANDS = {
     "delay": delay.main,
     "separate": separate.main,
     "tones": tones.main,
+    "chords": chords.main,
     "compare": compare.main,
     "eq-match": eq_match.main,
     "correction-ir": make_correction_ir.main,
@@ -30,6 +31,7 @@ commands:
   harmonics      <in.wav> (--auto | --at SEC --midi M ...) [--out-dir DIR]  harmonics.json
   delay          <in.wav> [--out-dir DIR]                     delay.json: echo lags by persistence and spread across windows
   take           <in.wav> [--out-dir DIR]                     take.json: pitch, duration, saturation, noise floor
+  chords         <in.wav> [--detector salience|basic-pitch] [--out F]  notes sounding at each attack with 2+ notes
   separate       <track> [--out-dir DIR]                      guitar.wav + no_guitar.wav at 48 kHz (needs demucs)
   tones          find <song> | list | add ... | reanalyze <song>|--all   library of stored song analyses
   compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram  [obsolete: use tone-builder]

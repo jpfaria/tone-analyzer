@@ -16,6 +16,7 @@ belongs to [tone-builder](https://github.com/jpfaria/tone-builder).
 - **`delay <wav>`** — echo lags ranked by how many independent 20 s windows vote for them, with
   the spread of the lag across windows (a copy: 0.00–0.05 ms; a rhythmic grid: 0.5–2 ms; a wobbling
   tape delay looks like a rhythm — one audio cannot tell). Measures only; no verdict.
+- **`chords <wav> [--detector salience|basic-pitch]`** — notes sounding at each attack with 2+ notes.
 - **`separate <track>`** — guitar out of a full mix with [demucs](https://github.com/adefossez/demucs)
   (`pipx install --python python3.12 demucs`, not bundled; no pipx → `brew install pipx`): `guitar.wav`, `no_guitar.wav`, 48 kHz.
 - **`tones find|list|add|reanalyze`** — the song library (below).
