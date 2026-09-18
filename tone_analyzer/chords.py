@@ -49,8 +49,10 @@ def levels_at(signal: np.ndarray, sr: int, start_s: float, freqs_hz: list[float]
 
 DETECTORS = ("salience", "basic-pitch")
 SAL_PROM_DB = 13.0        # the method's prominence gate (validated on single notes)
-SAL_HARM = 8              # harmonics read per candidate; guitar DI partials above h8 are weak and,
-                          # above ~2 kHz, fall inside the COLLIDE comb of any low note anyway
+SAL_HARM = 8              # harmonics read per candidate. Measured over the 17 test voicings x 2
+                          # spectrum shapes: 4 fails 10 cases (the major 10th's only second free
+                          # harmonic is h5), 5..16 all pass with identical results; 8 keeps margin
+                          # above the h5 floor without reading far into the weak upper partials
 MIN_FREE = 2              # the own fundamental plus one more free harmonic. Measured: a major 10th
                           # over root+fifth (G#3 in open E, C#4 in open A, F#4 in open D, A3 in
                           # barre F, D#4 in barre B) keeps only h1 and h5 free, the rest sit within
@@ -82,8 +84,9 @@ def salience_set(signal: np.ndarray, sr: int, start_s: float, dur_s: float = 0.6
     """The octave-reduced set of notes sounding at start_s: the lowest note of each octave class.
 
     Candidates are walked from low to high. A candidate is a note when its own fundamental is
-    prominent, within FUND_FLOOR_DB of the strongest reading, and not on the harmonic comb of a lower note already chosen, and it has at least
-    MIN_FREE prominent harmonics off those combs. Walking upwards makes the argument inductive:
+    prominent, within FUND_FLOOR_DB of the strongest reading, and not on the harmonic comb of a
+    lower note already chosen, and it has at least MIN_FREE prominent harmonics off those combs.
+    Walking upwards makes the argument inductive:
     every partial below a candidate's fundamental belongs to a lower note, and every lower note is
     either chosen or an octave copy of one chosen (its partials are even harmonics of that one),
     so a prominent, unexplained fundamental can only be a note of its own. Subharmonics never pass

@@ -25,28 +25,7 @@ def test_levels_at_none_when_too_short():
     assert chords.levels_at(np.zeros(SR // 10), SR, 0.0, [440.0]) is None
 
 
-def _chord(midis, stagger_s=0.0, dur_s=1.5, lead_s=0.5):
-    parts = []
-    for i, m in enumerate(midis):
-        pre = np.zeros(int(round((lead_s + i * stagger_s) * SR)), np.float32)
-        parts.append(np.concatenate([pre, harmonic_note(m, SR, dur_s, HARM)]))
-    n = max(len(p) for p in parts)
-    x = sum(np.pad(p, (0, n - len(p))) for p in parts)
-    return (0.5 * x / np.abs(x).max()).astype(np.float32)
-
-
-# A second spectrum shape: the same slope with each harmonic moved by up to +-6 dB (seeded), so
-# the detector is not tuned to one smooth decay.
-HARM_IRREGULAR = [h + d for h, d in zip(HARM, np.random.default_rng(7).uniform(-6.0, 6.0, len(HARM)))]
-
-
-def reduce(voicing):
-    """The octave-reduced set: the lowest note of each octave class stays, its octave copies go."""
-    s = set(voicing)
-    return sorted(m for m in s if not any(m - 12 * k in s for k in (1, 2, 3)))
-
-
-def _chord_shaped(midis, harm, stagger_s=0.01, dur_s=1.5, lead_s=0.5):
+def _chord(midis, harm=HARM, stagger_s=0.0, dur_s=1.5, lead_s=0.5):
     parts = []
     for i, m in enumerate(midis):
         pre = np.zeros(int(round((lead_s + i * stagger_s) * SR)), np.float32)
@@ -54,6 +33,18 @@ def _chord_shaped(midis, harm, stagger_s=0.01, dur_s=1.5, lead_s=0.5):
     n = max(len(p) for p in parts)
     x = sum(np.pad(p, (0, n - len(p))) for p in parts)
     return (0.5 * x / np.abs(x).max()).astype(np.float32)
+
+
+# A second spectrum shape: the same slope with each harmonic moved by up to +-6 dB (seeded), so
+# the detector is not tuned to one smooth decay.
+HARM_IRREGULAR = [h + d for h, d in
+                  zip(HARM, np.random.default_rng(7).uniform(-6.0, 6.0, len(HARM)))]
+
+
+def reduce(voicing):
+    """The octave-reduced set: the lowest note of each octave class stays, its octave copies go."""
+    s = set(voicing)
+    return sorted(m for m in s if not any(m - 12 * k in s for k in (1, 2, 3)))
 
 
 VOICINGS = {
@@ -81,13 +72,13 @@ VOICINGS = {
 @pytest.mark.parametrize("name", list(VOICINGS))
 def test_salience_finds_the_octave_reduced_chord(name, shape):
     voicing = VOICINGS[name]
-    x = _chord_shaped(voicing, HARM if shape == "smooth" else HARM_IRREGULAR)
+    x = _chord(voicing, HARM if shape == "smooth" else HARM_IRREGULAR, stagger_s=0.01)
     assert chords.salience_set(x, SR, 0.5) == reduce(voicing)
 
 
 @pytest.mark.parametrize("name", ["octave-A", "single-E2", "single-E3", "single-E4"])
 def test_one_reduced_note_is_not_a_chord(name):
-    x = _chord_shaped(VOICINGS[name], HARM)
+    x = _chord(VOICINGS[name], stagger_s=0.01)
     assert chords.detect_chords(x, SR) == []
 
 
