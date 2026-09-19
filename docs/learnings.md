@@ -7,6 +7,18 @@ source: claude-code-sessions
 
 # tone-analyzer — Learnings
 
+## 2026-09-18 — a decoded mp3 track is offset from its stem (~25 ms)
+
+- **Gotcha / invariant:** a stem separated from an mp3, or taken from another source, can sit ~25 ms off the decoded track (encoder/decoder delay). Reading harmonics on the track at the stem's attack time then lands in the wrong place. Store the measured offset per role (`tones add --track-offset`) and read at attack + offset; `separate` decodes the track before calling demucs so new stems come out aligned.
+- **Why it matters:** two library entries carried a 25 ms shift with offset 0 and silently wrong harmonics.
+- **Applies to:** `tones add`, `separate`, `scripts/validate_library.py` (checks measured alignment against the stored offset and that the stem fits inside the track — a track may be longer than the stem).
+
+## 2026-09-18 — the note detector is monophonic
+
+- **Gotcha / invariant:** a distorted chordal rhythm part yields 0–4 notes. That is the detector's limit, not bad data; lowering the threshold invents pitch.
+- **Why it matters:** do not "fix" a low note count by tuning thresholds; chords need a chord detector.
+- **Applies to:** `notes`, rhythm roles in the library.
+
 ## 2026-09-18 — `basic-pitch` chord detector: cannot live in this venv, runs out of process instead
 
 - **Gotcha / invariant:** `basic-pitch[onnx]` (0.3.0, the newest PyPI build — its classifiers only claim Python ≤3.11) cannot be installed into this project's own venv: it drags in `tensorflow-macos`, which requires `numpy<2.0.0`, while `pyproject.toml` pins `numpy==2.1.3` for the rest of the package — `from basic_pitch.inference import predict` then fails with `ImportError: numpy.core._multiarray_umath failed to import` the moment the pinned numpy is restored. Confirmed in a disposable venv (`python3.12 -m venv`, outside this repo's own `.venv`) two more incompatibilities on top: `resampy` (a basic-pitch dependency) still does `import pkg_resources`, removed from setuptools ≥81 (fix: pin `setuptools<81`); and basic-pitch's `get_pitch_bends` calls the long-removed `scipy.signal.gaussian` (fix: pin `scipy<1.13`). None of this can be reconciled with the project's own numpy/scipy pins in one venv.
