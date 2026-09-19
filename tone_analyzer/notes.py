@@ -58,7 +58,12 @@ def pitch_autocorr(
 def note_onsets(
     signal: np.ndarray, sr: int, floor_rel_db: float = 30.0, min_sep_s: float = 0.5
 ) -> list[int]:
-    """Attack sample indices: envelope rises >1.5x after a lower block."""
+    """Attack sample indices: envelope rises >1.5x after a lower block.
+
+    The rise may take two blocks (a low string on a bridge pickup measured 0.015, 0.197, 0.247): the first loud
+    block is then under 0.8x the next and the second under 1.5x the first. The second one is also compared with
+    the block before the rise, and the attack is reported where the rise began.
+    """
     x = np.asarray(signal, dtype=np.float64)
     block = max(1, int(round(1024 * sr / VALIDATED_SR)))
     if len(x) < 5 * block:
@@ -72,9 +77,13 @@ def note_onsets(
     last = -1e9
     for k in range(2, len(env) - 2):
         t = k * block / sr
-        if (env[k] > lim and env[k] > env[k - 1] * 1.5
-                and env[k] >= env[k + 1] * 0.8 and t - last > min_sep_s):
+        if not (env[k] > lim and env[k] >= env[k + 1] * 0.8 and t - last > min_sep_s):
+            continue
+        if env[k] > env[k - 1] * 1.5:
             out.append(k * block)
+            last = t
+        elif env[k - 1] > env[k - 2] * 1.5 and env[k] > env[k - 2] * 1.5:
+            out.append((k - 1) * block)
             last = t
     return out
 

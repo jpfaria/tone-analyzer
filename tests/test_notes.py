@@ -126,3 +126,15 @@ def test_detect_notes_tolerates_intonation_near_semitone_boundary():
     got = notes.detect_notes(sig, sr)
     assert len(got) == 1
     assert got[0]["midi"] in (46, 47)
+
+
+def test_note_onsets_find_an_attack_that_rises_over_two_blocks():
+    # 19/09/2026, low-E bridge-pickup take: envelope blocks 0.0146, 0.197, 0.247, 0.178. The first loud block
+    # is under 0.8x the next, the second is under 1.5x the first: neither passed and the note was lost.
+    sr = 48000
+    t = np.arange(sr) / sr
+    note = np.sin(2 * np.pi * 155.56 * t) * np.exp(-t / 0.4)
+    note[:1024] *= 0.7
+    x = np.concatenate([np.zeros(1024 * 23), note * 0.25, np.zeros(sr // 2)])
+    found = [i / sr for i in notes.note_onsets(x, sr)]
+    assert len(found) == 1 and abs(found[0] - 1024 * 23 / sr) < 0.03
