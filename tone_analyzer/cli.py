@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import sys
 
-from tone_analyzer import analyze, chords, compare, delay, eq_match, harmonics, make_correction_ir, separate, take, tones
+from tone_analyzer import analyze, chords, compare, delay, eq_match, harmonics, make_correction_ir, separate, split, take, tones
 
 _COMMANDS = {
     "analyze": analyze.main,
@@ -17,6 +17,7 @@ _COMMANDS = {
     "take": take.main,
     "delay": delay.main,
     "separate": separate.main,
+    "split": split.main,
     "tones": tones.main,
     "chords": chords.main,
     "compare": compare.main,
@@ -32,7 +33,8 @@ commands:
   delay          <in.wav> [--out-dir DIR]                     delay.json: echo lags by persistence and spread across windows
   take           <in.wav> [--out-dir DIR]                     take.json: pitch, duration, saturation, noise floor
   chords         <in.wav> [--detector salience|basic-pitch] [--out F]  notes sounding at each attack with 2+ notes
-  separate       <track> [--out-dir DIR]                      guitar.wav + no_guitar.wav at 48 kHz (needs demucs)
+  separate       <track> [--out-dir DIR]                      guitar.wav + no_guitar.wav at 48 kHz (needs demucs), then split
+  split          <guitar.wav> [--out-dir DIR]                 one WAV per panned part, labeled rhythm/lead/undetermined; says when it cannot split
   tones          find <song> | list | add ... | reanalyze <song>|--all   library of stored song analyses
   compare        <ref.wav> <wet.wav> [--out-dir DIR] ...      diff.json + A/B spectrogram  [obsolete: use tone-builder]
   eq-match       <ref.wav> <wet.wav> --gains g1,...,g8        next 8-band EQ gains toward the reference  [obsolete: use tone-builder]

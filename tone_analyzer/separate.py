@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Separate the guitar from a full track with the demucs CLI.
 
-Pure function over files: in = one track, out = `guitar.wav`, `no_guitar.wav`
-and `separate.json` in --out-dir, always 48 kHz float (a 44.1 kHz stem read as
+Pure function over files: in = one track, out = `guitar.wav`, `no_guitar.wav`,
+`separate.json`, and the guitar split by side (`split.json` + one WAV per part,
+see `split`) in --out-dir, always 48 kHz float (a 44.1 kHz stem read as
 48 kHz shifts every note +1.5 semitone). demucs is not reinvented and not
 installed here: missing → exit 3 with the install hint. demucs downloads its
 model on first use; this is the only command that may reach the network.
@@ -23,7 +24,7 @@ import numpy as np
 import soundfile as sf
 from scipy.signal import resample_poly
 
-from tone_analyzer import _common
+from tone_analyzer import _common, split
 from tone_analyzer.analyze import resolve_out_dir
 
 TARGET_SR = 48000
@@ -89,6 +90,7 @@ def main(argv: list[str] | None = None) -> int:
         "stems": [f"{s}.wav" for s in STEMS],
     }
     (out_dir / "separate.json").write_text(json.dumps(meta, indent=2, sort_keys=True), encoding="utf-8")
+    split.write_parts(out_dir / "guitar.wav", out_dir)
     print(str(out_dir))
     return 0
 

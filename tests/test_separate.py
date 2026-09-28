@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import stat
 import sys
@@ -15,6 +16,7 @@ from tone_analyzer import separate
 FAKE_DEMUCS = r'''#!{python}
 import sys, pathlib
 import numpy as np, soundfile as sf
+import json
 import os
 args = sys.argv[1:]
 if os.environ.get("FAKE_DEMUCS_ARGS"):
@@ -123,3 +125,19 @@ def test_separate_feeds_demucs_a_wav_decoded_like_the_analyzer(tmp_path, monkeyp
     suffix, frames = seen["input"].split()
     assert suffix == ".wav"
     assert int(frames) == sf.info(str(flac)).frames
+
+
+def test_separate_also_splits_the_guitar_and_says_whether_it_could(tmp_path, monkeypatch):
+    _install_fake(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    assert separate.main([str(_track(tmp_path)), "--out-dir", str(out)]) == 0
+    meta = json.loads((out / "split.json").read_text())
+    assert meta["split"] is False  # the fake's guitar is the same on both sides
+    assert "center" in meta["reason"]
+    for p in meta["parts"]:
+        assert (out / p["file"]).is_file()
+
+
+def test_cli_lists_split():
+    from tone_analyzer import cli
+    assert "split" in cli._COMMANDS

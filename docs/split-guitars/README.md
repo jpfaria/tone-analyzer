@@ -1,6 +1,6 @@
 # Dividir a guitarra separada (demucs) em partes e rotular base/solo
 
-Status: ideia, medida em 2026-09-28, não implementada.
+Status: implementado em `tone_analyzer/split.py` (`tone-analyzer split`, e o `separate` já roda sozinho), 2026-09-28.
 
 ## Problema
 `separate` (demucs `--two-stems guitar`) entrega UMA guitarra. Os pares `lead`/`rhythm`
@@ -24,3 +24,26 @@ da biblioteca vieram de stems reais (`kind: stem`), nunca do separador.
    - **solo**: ativa em trechos, monofônica, harmonia divergente da base.
    - dois lados com mesma harmonia → `rhythm-L` / `rhythm-R` (base dobrada).
 3. Solo no centro: testar `mid − (L+R base)` como candidato a solo (não medido).
+
+## Resultado nas guitarras separadas da biblioteca (2026-09-28)
+| música | veredito | partes |
+|---|---|---|
+| Creed — My Sacrifice | dividida (−0.11) | rhythm-L, rhythm-R |
+| Green Day — Welcome to Paradise | dividida (−0.03) | rhythm-L, rhythm-R |
+| Green Day — American Idiot | dividida (0.18) | rhythm-L, rhythm-R |
+| Green Day — Boulevard | dividida (0.06) | rhythm-L, rhythm-R |
+| Pearl Jam — Alive | dividida (0.40) | rhythm-L, rhythm-R |
+| Pearl Jam — Even Flow | dividida (0.04) | rhythm-L, rhythm-R |
+| Green Day — Good Riddance | centro (0.95) | rhythm |
+| John Mayer — Gravity | centro (0.97) | lead |
+| Samuel Lima — Quem é Esse | centro (0.72) | undetermined |
+
+## Limites (quando NÃO dá — a ferramenta diz)
+- Guitarra no centro ou mono → `split: false` + motivo; uma parte só.
+- Parte que não é claramente base nem solo → `undetermined`, nunca chute.
+- O rótulo é da música inteira. Solo que entra por cima da base no mesmo lado
+  some no rótulo: Even Flow tem o solo no lado L (65 s) sobre a base — no trecho do
+  solo o L cai de 4.4 para 3.2 notas simultâneas, mas continua `rhythm-L`.
+  Rotular por trecho seria o próximo passo; o sinal medido é fraco.
+- O "solo" e a "base" da Even Flow na biblioteca são recortes no tempo da mesma
+  separação demucs (correlação 1.00), não stems independentes.

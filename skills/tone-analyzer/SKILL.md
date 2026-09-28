@@ -104,7 +104,8 @@ from its stored audio (`<role>/reference.*`, `track.*`).
 | harmonics H1..H16 of a note at a **given** attack time — e.g. reading a full mix where the note was located elsewhere | `"$TA" harmonics <in.wav> --at SEC --midi M [--at SEC --midi M …]` | `harmonics.json` |
 | harmonics of the notes **detected** in this audio | `"$TA" harmonics <in.wav> --auto` | `harmonics.json` |
 | one recorded note/take: pitch, onset, duration, saturation, noise floor | `"$TA" take <in.wav>` | `take.json` |
-| guitar out of a full mix (needs `demucs` on PATH, exit 3 if missing) | `"$TA" separate <track>` | `guitar.wav`, `no_guitar.wav` (48 kHz), `separate.json` |
+| guitar out of a full mix (needs `demucs` on PATH, exit 3 if missing) | `"$TA" separate <track>` | `guitar.wav`, `no_guitar.wav` (48 kHz), `separate.json`, + split below |
+| guitar split by side, each part labeled rhythm/lead/undetermined | `"$TA" split <guitar.wav>` | `rhythm-L.wav`… + `split.json` (`split: false` + `reason` when centered/mono — say so, never invent a second guitar) |
 | song library | `"$TA" tones find <song>` · `tones list` · `tones add …` · `tones reanalyze <song>\|--all` | library root |
 
 All accept `--out-dir DIR` (default `/tmp/tone-analyzer/<unix_ts>/`) and print it on
